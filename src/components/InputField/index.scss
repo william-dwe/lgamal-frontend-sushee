@@ -1,0 +1,20 @@
+@import '../../variables.scss';
+
+div.inputText {
+    width: 450px;
+    text-align: left;
+
+    h2 {
+        font: $font-subsubheader;
+        font-weight: bold;
+    }
+
+    select {
+        width: 100%;
+        height: 3.125rem;
+        padding: 0 5%;
+        font: $font-content;
+        border: $border-default;
+        border-radius: $border-roundness-default;
+    }
+}

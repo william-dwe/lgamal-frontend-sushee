@@ -1,0 +1,31 @@
+@import '../../variables.scss';
+
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3vh 15vw;
+
+    p.logo {
+        font: $font-logo;
+        font-weight: bold;
+    }
+
+    ul.navbar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0 3vw;
+        font: $font-menu-page;
+
+        li > a {
+            color: $base-grey;
+            &.active {
+                border-bottom: $border-default;
+                border-color: $base-grey;
+            }
+        }
+    }
+}
