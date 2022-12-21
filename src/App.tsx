@@ -15,8 +15,9 @@ function App(): JSX.Element {
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route element={<ProtectedPage/>}>
-          <Route path='/' element={<Navigation/>}/>
-          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/' element={<Navigation/>}>
+            <Route path='/profile' element={<Profile/>}/>
+          </Route>
         </Route>
         <Route path="*" element={<NotFound/>}/>
       </Routes>

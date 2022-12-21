@@ -20,6 +20,8 @@ const ProtectedPage = () : JSX.Element => {
     const authToken = useSelector(selectCurrentToken)
 
     useEffect(() => {
+        console.log("DEBUG-RESP:",response)
+        console.log("DEBUG-ERR:",error)
         if (isSuccess && !authToken) {
             const newAccessToken = response.data.accessToken
             const userDetail = jwtDecode(newAccessToken) as any
@@ -28,7 +30,7 @@ const ProtectedPage = () : JSX.Element => {
         }
     }, [response])
 
-    const content = !authToken && !isError ? <h1>Loading ...</h1> : (
+    const content = (
         authToken
         ? <Outlet/>
         : <Navigate to="/login" state={{from: location}} replace/>

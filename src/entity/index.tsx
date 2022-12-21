@@ -5,6 +5,7 @@ export interface IAuthReqLogin {
 export interface IAuthReqRegister {
     fullName: string;
     email: string;
+    phone: string
     username: string;
     password: string;
 }
@@ -29,4 +30,18 @@ export interface ITokenContent {
     exp: number,
     iat: number,
     user: IUserContext
+}
+
+export interface IAuthReqRegister {
+    fullName: string;
+    email: string;
+    username: string;
+    password: string;
+}
+
+export interface IAuthReqEditProfile {
+    fullName: string;
+    phone: string;
+    email: string;
+    password: string;
 }

@@ -10,9 +10,6 @@ export default function Login():JSX.Element {
     const [identifier, setIdentifier] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [login, { isLoading }] = useLoginMutation()
-    const prevLocationState = {
-
-    }
 
     const dispatch = useDispatch()
     const location = useLocation()
@@ -25,7 +22,7 @@ export default function Login():JSX.Element {
             dispatch(setCredentials({...userData, identifier}))
             setIdentifier('')
             setPassword('')
-            navigate(location.state.from.pathname)
+            navigate(location.state?location.state.from.pathname:"/")
         } catch (err) {
             console.log(err)
         }

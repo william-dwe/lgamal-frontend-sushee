@@ -1,6 +1,7 @@
 import { BaseQueryApi, BaseQueryFn, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, logOut } from '../../features/authSlice'
 import { RootState } from '../store'
+import { useLocation, useNavigate } from 'react-router'
 
 const baseUrl = (process.env.REACT_APP_BACKEND_URL ? process.env.REACT_APP_BACKEND_URL : 'http://localhost:8080/v1')
 const baseQuery = fetchBaseQuery({
@@ -18,9 +19,10 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth: BaseQueryFn = async (args: string, api: BaseQueryApi, extraOptions: {shout?: boolean}) => {
     let result = await baseQuery(args, api, extraOptions)
-
-    if (result?.meta?.response?.status !== 200) {
+    console.log("BEFORE REFRESH:", result)
+    if (result?.meta?.response?.status === 401) {
         const refreshResult = await baseQuery('/refresh', api, extraOptions)
+        console.log("AFTER REFRESH:", refreshResult)
         if (refreshResult?.data) {
             const currentState = await api.getState() as RootState
             const user = currentState.auth.user

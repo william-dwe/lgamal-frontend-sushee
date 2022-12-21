@@ -9,6 +9,7 @@ import InputField from '../../../components/InputField';
 export default function Register():JSX.Element {
     const [fullName, setFullName] = React.useState('')
     const [username, setUsername] = React.useState('')
+    const [phone, setPhone] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [register, { isLoading }] = useRegisterMutation()
@@ -20,7 +21,7 @@ export default function Register():JSX.Element {
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         try {
-          const userData = await register({fullName, email, username, password}).unwrap()
+          const userData = await register({fullName, email, phone, username, password}).unwrap()
           dispatch(setCredentials({...userData, username}))
           setFullName('')
           setUsername('')
@@ -34,6 +35,7 @@ export default function Register():JSX.Element {
 
     const handleFullNameInput = (e: any) => setFullName(e.target.value)
     const handleUsernameInput = (e: any) => setUsername(e.target.value)
+    const handlePhoneInput = (e: any) => setPhone(e.target.value)
     const handleEmailInput = (e: any) => setEmail(e.target.value)
     const handlePasswordInput = (e: any) => setPassword(e.target.value)
 
@@ -52,6 +54,12 @@ export default function Register():JSX.Element {
                 type='text'
                 textInputProps={{placeholder: 'tatangs123'}}
                 stateHandler={handleUsernameInput}
+            />
+            <InputField
+                title='Phone'
+                type='text'
+                textInputProps={{placeholder: '054375834'}}
+                stateHandler={handlePhoneInput}
             />
             <InputField
                 title='Email'

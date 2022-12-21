@@ -4,16 +4,18 @@ import InputField from '../../../components/InputField'
 import { selectCurrentToken } from '../../../features/authSlice'
 import { selectCurrentUser } from '../../../features/userSlice'
 import jwtDecode from 'jwt-decode'
-import {ITokenContent, IUserContext, IRes} from '../../../entity'
-import { useProfileQuery } from '../../../features/userSlice/authApiSlice'
+import {ITokenContent, IUserContext, IRes, IAuthReqEditProfile} from '../../../entity'
+import { useEditProfileMutation, useProfileQuery } from '../../../features/userSlice/userApiSlice'
 
 
 const Profile = (): JSX.Element => {
+    const [currentProfileDetail, setCurrentProfileDetail] = React.useState<IUserContext>()
     const [fullName, setFullName] = React.useState('')
     const [username, setUsername] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [phone, setPhone] = React.useState('')
-
+    
+    const authToken = useSelector(selectCurrentToken)
     const {
         data: response,
         isLoading,
@@ -22,9 +24,9 @@ const Profile = (): JSX.Element => {
         error
     } = useProfileQuery()
     
-    const authToken = useSelector(selectCurrentToken)
     useEffect(()=>{
         if (response){
+            setCurrentProfileDetail(response)
             setFullName(response.data.FullName)
             setUsername(response.data.Username)
             setEmail(response.data.Email)
@@ -34,12 +36,6 @@ const Profile = (): JSX.Element => {
 
 
     const [toggleEdit, setToggleEdit] = React.useState(false)
-    const [refreshRes, setRefreshRes] = React.useState<IRes>()
-    
-
-    //todo: change logic from using JWT --> fetch query me
-    //todo: add changes for user profile & password
-
     const handleFullNameInput = (e: any) => setFullName(e.target.value)
     const handleUsernameInput = (e: any) => setUsername(e.target.value)
     const handleEmailInput = (e: any) => setEmail(e.target.value)
@@ -51,8 +47,35 @@ const Profile = (): JSX.Element => {
         e.preventDefault()
         setToggleEdit(true)
     }
+
+    //todo: handle submit 
+    const [editProfile] = useEditProfileMutation()
     const handleSubmit = (e: any) => {
         e.preventDefault()
+        try {
+            const reqBody: Partial<IAuthReqEditProfile> = {}
+            if (currentProfileDetail?.data.FullName !== fullName) {
+                reqBody.fullName = fullName
+            }
+            if (currentProfileDetail?.data.Phone !== phone) {
+                reqBody.phone = phone
+            }
+            if (currentProfileDetail?.data.Email !== email) {
+                reqBody.email = email
+            }
+            
+            console.log('REQ BODY:', reqBody)
+            //todo: investigate unintended password changes
+            //todo: register + phone number field
+            //todo: explore form submit, combine with image transport
+
+
+            editProfile(reqBody).unwrap().then((user)=>{
+                setToggleEdit(false)
+            })
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     const content = (

@@ -1,4 +1,3 @@
-import { NullLiteral } from "typescript";
 import { apiSlices } from "../../app/api/apiSlice";
 import { IAuthReqLogin, IAuthReqRegister } from "../../entity";
 
