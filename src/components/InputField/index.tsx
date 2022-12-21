@@ -5,7 +5,8 @@ type Props = {
     title: string;
     type: 'text' | 'password' | 'option';
     textInputProps?: {
-        placeholder: string;
+        placeholder?: string;
+        value?: string;
         isDisabled?: boolean;
     }
     optionInputProps?: {
@@ -21,6 +22,7 @@ const renderInput = (props: Props): any => {
             return (props.textInputProps && 
             <input 
                 type={props.type} 
+                value={props.textInputProps.value}
                 onChange={props.stateHandler} 
                 placeholder={props.textInputProps.placeholder} 
                 disabled={props.textInputProps.isDisabled}

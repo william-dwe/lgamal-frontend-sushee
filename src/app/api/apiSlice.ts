@@ -2,7 +2,7 @@ import { BaseQueryApi, BaseQueryFn, createApi, fetchBaseQuery } from '@reduxjs/t
 import { setCredentials, logOut } from '../../features/authSlice'
 import { RootState } from '../store'
 
-const baseUrl = (process.env.REACT_APP_BACKEND_URL ? process.env.REACT_APP_BACKEND_URL : 'http://localhost:8080')
+const baseUrl = (process.env.REACT_APP_BACKEND_URL ? process.env.REACT_APP_BACKEND_URL : 'http://localhost:8080/v1')
 const baseQuery = fetchBaseQuery({
     baseUrl: baseUrl,
     credentials: 'include',

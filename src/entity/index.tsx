@@ -14,3 +14,19 @@ export interface IRes {
     message: string;
     data: any;
 }
+export interface IUserContext {
+    data: {
+        FullName : string;
+        Username : string;
+        Email : string;
+        Phone : string;
+        ProfilePicture : string;
+        PlayAttempt : number;
+        RoleId : number;
+    }
+}
+export interface ITokenContent {
+    exp: number,
+    iat: number,
+    user: IUserContext
+}

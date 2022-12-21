@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../features/authSlice';
 import { useLoginMutation } from '../../../features/authSlice/authApiSlice';
@@ -10,9 +10,12 @@ export default function Login():JSX.Element {
     const [identifier, setIdentifier] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [login, { isLoading }] = useLoginMutation()
-    
+    const prevLocationState = {
+
+    }
 
     const dispatch = useDispatch()
+    const location = useLocation()
     const navigate = useNavigate()
     
     const handleSubmit = async (e: any) => {
@@ -22,7 +25,7 @@ export default function Login():JSX.Element {
             dispatch(setCredentials({...userData, identifier}))
             setIdentifier('')
             setPassword('')
-            navigate('/')
+            navigate(location.state.from.pathname)
         } catch (err) {
             console.log(err)
         }

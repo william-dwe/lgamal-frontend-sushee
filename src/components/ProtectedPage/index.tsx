@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Navigate, Outlet, useLocation } from 'react-router-dom'
 import { selectCurrentToken, setCredentials } from '../../features/authSlice'
@@ -19,12 +19,11 @@ const ProtectedPage = () : JSX.Element => {
     } = useRefreshQuery()
     const authToken = useSelector(selectCurrentToken)
 
-
     useEffect(() => {
         if (isSuccess && !authToken) {
             const newAccessToken = response.data.accessToken
             const userDetail = jwtDecode(newAccessToken) as any
-            const username = userDetail.user.Username
+            const username = userDetail.username
             dispatch(setCredentials({...response, username}))
         }
     }, [response])

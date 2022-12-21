@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import Profile from './pages/Auth/Profile';
 import ProtectedPage from './components/ProtectedPage';
 import Navigation from './components/Navigation'
 import {Routes, Route} from 'react-router'
@@ -15,6 +16,7 @@ function App(): JSX.Element {
         <Route path='/register' element={<Register/>}/>
         <Route element={<ProtectedPage/>}>
           <Route path='/' element={<Navigation/>}/>
+          <Route path='/profile' element={<Profile/>}/>
         </Route>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
