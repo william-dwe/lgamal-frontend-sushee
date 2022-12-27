@@ -1,0 +1,56 @@
+@import '../../variables.scss';
+
+
+div.card {
+    width: 20rem;
+    height: 400px; 
+    padding: 5%;
+    margin: 0;
+
+
+    h5 {
+        color: $base-black;
+        margin-bottom: 0;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    div.ratingAndFavorite {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+
+        div.rating {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.25rem;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        div.favorite {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.25rem;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        
+    }
+
+    img.card-img-top {
+        max-width: 250px;
+        max-height: 250px;
+    }
+}

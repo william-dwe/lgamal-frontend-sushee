@@ -1,31 +1,57 @@
 @import '../../variables.scss';
 
-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 3vh 15vw;
-
-    p.logo {
-        font: $font-logo;
-        font-weight: bold;
-    }
-
-    ul.navbar {
+div {
+    nav {
+        z-index: 4;
+        position: fixed;
+        width: 100vw;
+        top: 0;
+        background-color: none;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        gap: 0 3vw;
-        font: $font-menu-page;
-
-        li > a {
-            color: $base-grey;
-            &.active {
-                border-bottom: $border-default;
-                border-color: $base-grey;
+        padding: 2vh 15vw;
+    
+        p.logo {
+            color: $base-orange;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0;
+            font-family: "Satisfy", sans-serif;
+        }
+    
+        div.navbar {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0 3vw;
+    
+            span > a {
+                color: $base-white;
+                &.active {
+                    font-weight: bold;
+                    color: $base-orange;
+                }
+                &:hover {
+                    // font-weight: bold;
+                    color: $base-orange;
+                }
             }
         }
     }
+    
+    button#goToTop {
+        position: fixed;
+        bottom: 5vh;
+        right: 5vw;
+        opacity: 0.65;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        // display: none;
+        padding: 0;
+    }
 }
+

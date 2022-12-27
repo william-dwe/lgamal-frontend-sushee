@@ -1,5 +1,5 @@
 import { apiSlices } from "../../app/api/apiSlice";
-import { IAuthReqLogin, IAuthReqRegister } from "../../entity";
+import { IAuthReqLogin, IAuthReqRegister } from "../../entity/UserAuth";
 
 export const authApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({

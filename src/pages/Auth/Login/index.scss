@@ -1,47 +1,31 @@
 @import '../../../variables.scss';
 
-div.loginPage {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+section.login {
+    height: 100vh;
+    width: auto;
+    background-image: url("https://res.cloudinary.com/dgr6o89ym/image/upload/v1672109205/sources/wallpaperflare.com_wallpaper_wtqler.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: $base-grey;
+    background-blend-mode: multiply;
 
-    .leftContainer {
-        width: 450px;
-        margin: 20vh 15vw;
-        background-color: #fff;
-    
+    .content {
+        padding-top: 20vh;
+
         h1 {
-            text-align: left;
-            font: $font-header;
-            font-weight: bold;
+            text-align: center;
+            color: $base-white;
+            font-size: 5rem;
         }
 
-        div.content {
+        form {
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: $base-black;
             gap: 2.5vh 0;
-            button {
-                background-color: $base-blue;
-                color: $base-white;
-                font: $font-content;
-                font-weight: bold;
-                border: none;
-                border-radius: $border-roundness-default;
-                padding: 1rem;
-                width: 100%;
-            }
         }
     }
-
-    .rightContainer {
-        background-color: $base-blue;
-        width: 30vw;
-        height: 100vh;
-
-        img {
-            margin-top: 30vh;
-            background-color: transparent;
-        }
-    }
-    
 }

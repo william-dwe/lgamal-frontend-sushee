@@ -5,6 +5,7 @@ import { setCredentials } from '../../../features/authSlice';
 import { useRegisterMutation } from '../../../features/authSlice/authApiSlice';
 import './index.scss'
 import InputField from '../../../components/InputField';
+import Loader from '../../../components/Loader';
 
 export default function Register():JSX.Element {
     const [fullName, setFullName] = React.useState('')
@@ -39,36 +40,41 @@ export default function Register():JSX.Element {
     const handleEmailInput = (e: any) => setEmail(e.target.value)
     const handlePasswordInput = (e: any) => setPassword(e.target.value)
 
-    const content =  isLoading ? <h1>Loading...</h1> : (
+    const content =  isLoading ? <Loader/> : (
     <section className='register'>
         <h1>Register</h1>
         <form className="content" onSubmit={handleSubmit}>
             <InputField
                 title='Full Name'
+                name='full_name'
                 type='text'
                 textInputProps={{placeholder: 'tatang sutarma'}}
                 stateHandler={handleFullNameInput}
             />
             <InputField
                 title='Username'
+                name='username'
                 type='text'
                 textInputProps={{placeholder: 'tatangs123'}}
                 stateHandler={handleUsernameInput}
             />
             <InputField
                 title='Phone'
+                name='phone'
                 type='text'
                 textInputProps={{placeholder: '054375834'}}
                 stateHandler={handlePhoneInput}
             />
             <InputField
                 title='Email'
+                name='email'
                 type='text'
                 textInputProps={{placeholder: 'tatangs@mail.com'}}
                 stateHandler={handleEmailInput}
             />
             <InputField
                 title='Password'
+                name='password'
                 type='password'
                 textInputProps={{placeholder: '*********'}}
                 stateHandler={handlePasswordInput}

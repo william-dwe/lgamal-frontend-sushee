@@ -1,0 +1,10 @@
+@import '../../../variables.scss';
+
+section.Profile {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vh 0;
+    
+    align-items: center;
+    justify-content: center;
+}

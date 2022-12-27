@@ -3,6 +3,7 @@ import './index.scss'
 
 type Props = {
     title: string;
+    name: string;
     type: 'text' | 'password' | 'option';
     textInputProps?: {
         placeholder?: string;
@@ -21,6 +22,7 @@ const renderInput = (props: Props): any => {
         case 'password':
             return (props.textInputProps && 
             <input 
+                name={props.name} 
                 type={props.type} 
                 value={props.textInputProps.value}
                 onChange={props.stateHandler} 
@@ -30,7 +32,7 @@ const renderInput = (props: Props): any => {
         case 'option':
             return (props.optionInputProps && 
             <select 
-                name={props.type} 
+                name={props.name} 
                 id="option" 
                 onChange={props.stateHandler}
             >

@@ -19,10 +19,8 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth: BaseQueryFn = async (args: string, api: BaseQueryApi, extraOptions: {shout?: boolean}) => {
     let result = await baseQuery(args, api, extraOptions)
-    console.log("BEFORE REFRESH:", result)
     if (result?.meta?.response?.status === 401) {
         const refreshResult = await baseQuery('/refresh', api, extraOptions)
-        console.log("AFTER REFRESH:", refreshResult)
         if (refreshResult?.data) {
             const currentState = await api.getState() as RootState
             const user = currentState.auth.user
@@ -38,5 +36,6 @@ const baseQueryWithReauth: BaseQueryFn = async (args: string, api: BaseQueryApi,
 
 export const apiSlices = createApi({
     baseQuery: baseQueryWithReauth,
+    tagTypes:['Profile', 'Menu'],
     endpoints: () => ({}),
 })

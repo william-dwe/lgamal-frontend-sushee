@@ -1,4 +1,4 @@
-import { IAuthReqEditProfile, IUserContext } from "../../entity";
+import { IAuthReqEditProfile, IUserContext } from "../../entity/UserAuth";
 import { apiSlices } from "../../app/api/apiSlice";
 
 export const userApiSlice = apiSlices.injectEndpoints({
@@ -7,14 +7,16 @@ export const userApiSlice = apiSlices.injectEndpoints({
             query: () => ({
                 url: '/users/me'
             }),
-            keepUnusedDataFor: 60,
+            providesTags: ['Profile']
+
         }),
-        editProfile: builder.mutation<any, any>({
+        editProfile: builder.mutation<any, FormData>({
             query: (payload) => ({
                 url: '/users/me',
                 method: 'POST',
-                body: payload
-            })
+                body: payload,
+            }),
+            invalidatesTags: ['Profile']
         })
     })
 })
