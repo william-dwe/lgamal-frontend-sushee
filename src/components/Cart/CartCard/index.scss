@@ -1,0 +1,27 @@
+@import '../../../variables.scss';
+
+
+div.cart_card {
+    margin: 2.5%;
+    padding: 2.5%;
+
+    img.card-img {
+        padding: 3%;
+    }
+
+    .card-body {
+        h5.card-title {
+            color: $base-black;
+            font-size: 2rem;
+            margin-bottom: 0;
+        }
+        
+        p.card-text {
+            font-size: 1rem;
+        }
+
+        p.quantity {
+            font-size: 0.75rem;
+        }
+    }
+}

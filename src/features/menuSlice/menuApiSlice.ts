@@ -1,13 +1,16 @@
 import { IRes } from "../../entity";
-import { IMenuLists, IPromotionLists } from "../../entity/Menus";
+import { IMenuLists, IMenuQuery, IPromotionLists } from "../../entity/Menus";
 import { apiSlices } from "../../app/api/apiSlice";
 
 export const menuApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
-        menus: builder.query<IRes<IMenuLists>, void>({
-            query: () => ({
-                url: '/menus'
-            }),
+        menus: builder.query<IRes<IMenuLists>, IMenuQuery>({
+            query: (args) => {
+                return ({
+                    url: '/menus',
+                    params: args
+                })
+            },
             providesTags: ['Menu']
         }),
         promotions: builder.query<IRes<IPromotionLists>, void>({
@@ -15,7 +18,6 @@ export const menuApiSlice = apiSlices.injectEndpoints({
                 url: '/promotions'
             }),
             providesTags: ['Menu']
-
         }),
     })
 })

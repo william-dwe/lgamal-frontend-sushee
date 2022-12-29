@@ -13,9 +13,10 @@ type Props = {
 
 export default function MenuCard(props: Props): JSX.Element {
     return (
-        <div className="card">
-            <img src={props.menuPhoto} className="card-img-top" alt={props.menuName}/>
-            <div className="card-body">
+        <div className="card mb-3">
+            <img src={props.menuPhoto} className="card-img" alt={props.menuName}/>
+            <div className="card-body"></div>
+            <div className="card-footer">
                 <h5 className="card-title">{props.menuName}</h5>
                 <p className="card-text">IDR {(props.price).toLocaleString('id-ID')}</p>
                 <div className="ratingAndFavorite">

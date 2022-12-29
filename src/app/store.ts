@@ -3,6 +3,7 @@ import { apiSlices } from './api/apiSlice';
 import authReducer from '../features/authSlice'
 import userReducer from '../features/userSlice'
 import menuReducer from '../features/menuSlice'
+import cartReducer from '../features/cartSlice'
 import logger from 'redux-logger';
 
 
@@ -11,7 +12,8 @@ export const store = configureStore({
     [apiSlices.reducerPath]: apiSlices.reducer,
     auth: authReducer,
     user: userReducer,
-    menu: menuReducer
+    menu: menuReducer,
+    cart: cartReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

@@ -1,18 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./index.scss"
 import MenuCard from '../../components/MenuCard'
-import { useMenusQuery } from '../../features/menuSlice/menuApiSlice'
+import { menuApiSlice, useMenusQuery, usePromotionsQuery } from '../../features/menuSlice/menuApiSlice'
 import Loader from '../../components/Loader'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectFilterQuery, setFilterQuery } from '../../features/menuSlice'
+import RadioButton from '../../components/RadioButton'
+import { apiSlices } from '../../app/api/apiSlice'
+import PromotionCard from '../../components/PromotionCard'
 
 const Menu = (): JSX.Element => {
     const hero1 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672109205/sources/wallpaperflare.com_wallpaper_wtqler.jpg"
     const hero2 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672122757/sources/wallpaperflare.com_wallpaper_1_nekcbo.jpg"
     const hero3 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672122755/sources/wallpaperflare.com_wallpaper_2_vhqq27.jpg"
 
-    const { data, error, isLoading } = useMenusQuery()
+
+    const dispatch = useDispatch()
+    const filterQuery = useSelector(selectFilterQuery)
+    const { data: menu, isLoading: isMenuLoading } = useMenusQuery(filterQuery)
+    const { data: promotion, isError: isPromotionError, isLoading: isPromotionLoading } = usePromotionsQuery()
+    
+    const handleFilter = ((e: any) => {
+        const newFilterQuery = {...filterQuery}
+        newFilterQuery.filterByCategory = e.target.value
+        dispatch(setFilterQuery(newFilterQuery))
+    })
+
+    const handleHidingNavOnScroll = (e: any) => {
+        console.log('scrollTop: ', e.currentTarget.scrollTop);
+        console.log('offsetHeight: ', e.currentTarget.offsetHeight);
+    }
 
     const content = (
-        <>
+        <div className='main' onScroll={handleHidingNavOnScroll}>
             <section className="hero">
                 <div id="menuHeroCarousel" className="carousel slide" data-bs-ride="carousel" data-interval="3000" data-bs-touch="false">
                     <div className="carousel-inner">
@@ -41,31 +61,75 @@ const Menu = (): JSX.Element => {
                 </div>
             </section>
             
-            <section className="promotion">
-                <h2>Special for you!</h2>
-
-            </section>
-
-
-            <section className="menu">
-                <h2>Check our specialties!</h2>
-                <div className="row">
-                    <div className="col-lg-12 d-flex justify-content-center">
-                        <ul id="menu-flters">
-                        <li data-filter="*" className="filter-active">Show All</li>
-                        <li data-filter=".filter-starters">Starters</li>
-                        <li data-filter=".filter-salads">Salads</li>
-                        <li data-filter=".filter-specialty">Specialty</li>
-                        </ul>
+            { 
+                !isPromotionError 
+                && <section className="promotion">
+                    
+                    <h2>Special for you!</h2>
+                    <div className="container">
+                        <div className="row menu-container">
+                            {
+                                !isPromotionLoading && promotion 
+                                ?  promotion.data.promotions.map((val, i) => {
+                                    return (
+                                        <div key={i} className="col-lg-6 mt-1 mb-1 menu-item">
+                                            <PromotionCard
+                                                    menuName= {val.Name}
+                                                    description= {val.Description}
+                                                    promotionPhoto= {val.PromotionPhoto}
+                                                    discountRate= {val.DiscountRate}
+                                                    startAt= {val.StartAt}
+                                                    expiredAt= {val.ExpiredAt}
+                                                    promotionMenus={val.PromoMenus}
+                                            />
+                                        </div>
+                                    )
+                                })
+                                :<Loader/>
+                            }
+                        </div>
                     </div>
-                </div>
+                </section>
+            }
+            <br/>
+            <section className="menu">
+                <h2>Our specialties!</h2>
                 <div className="container">
+                    <div className="row">
+                        <div className="menu-filter col-12 d-flex gap-3 mb-3 justify-content-center">
+                            <RadioButton 
+                                groupName='menu-filter' 
+                                text='All Menu' 
+                                value='appetizers,meals,drinks'
+                                onChange={handleFilter}
+                                default={true}
+                            />
+                            <RadioButton 
+                                groupName='menu-filter' 
+                                text='Appetizers' 
+                                value='appetizers'
+                                onChange={handleFilter}
+                            />
+                            <RadioButton 
+                                groupName='menu-filter' 
+                                text='meals' 
+                                value='meals'
+                                onChange={handleFilter}
+                            />
+                            <RadioButton 
+                                groupName='menu-filter' 
+                                text='drinks' 
+                                value='drinks'
+                                onChange={handleFilter}
+                            />
+                        </div>
+                    </div>
                     <div className="row menu-container">
                         {
-                            !isLoading && data 
-                            ?  data.data.menus.map((val, i) => {
+                            !isMenuLoading && menu 
+                            ?  menu.data.menus.map((val, i) => {
                                 return (
-                                    <div key={i} className="col-lg-3 mt-1 mb-1 menu-item filter-starters">
+                                    <div key={i} className="col-lg-3 mt-1 mb-1 menu-item">
                                         <MenuCard
                                             menuName={val.MenuName}
                                             avgRating={val.AvgRating}
@@ -84,7 +148,7 @@ const Menu = (): JSX.Element => {
                 
 
             </section>
-        </>
+        </div>
     )
 
     return content

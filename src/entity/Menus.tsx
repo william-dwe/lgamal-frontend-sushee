@@ -14,15 +14,42 @@ export interface IMenuLists {
     max_page: number;
 }
 
+export interface IMenuQuery {
+	search: string;
+	sort: string;
+	sortBy: string;
+	filterByCategory: string;
+	limit: number;
+	page: number;
+
+}
+
 export interface IPromotion {
-    id: string;
+    id: number;
     AdminId: number;
 	Name: string;
 	Description: string;
 	PromotionPhoto: string;
 	DiscountRate: number;
 	StartAt: Date;
-	expiredAt: Date;
+	ExpiredAt: Date;
+	PromoMenus: [
+		{
+			id: number;
+			PromotionId: number;
+			MenuId: number;
+			Menu: {
+				id: number;
+				MenuName: string;
+				AvgRating: number;
+				NumberOfFavorites: number;
+				Price: number;
+				MenuPhoto: string;
+				CategoryId: number;
+			}
+			PromotionPrice: number;
+		}
+	]
 }
 
 

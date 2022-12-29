@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink, Outlet} from 'react-router-dom';
 import './index.scss'
+import Cart from '../Cart';
 
 export default function Navigation(): JSX.Element {
     const handleHidingNavOnScroll = (e: any) => {
@@ -9,7 +10,7 @@ export default function Navigation(): JSX.Element {
   };
 
     return (
-        <div onScroll={handleHidingNavOnScroll}>
+        <div>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"></link>
             <nav>
                 <p className='logo'>Sushee!</p>
@@ -18,6 +19,8 @@ export default function Navigation(): JSX.Element {
                     <span><NavLink end to='profile'>Profile</NavLink></span>
                     <span><NavLink to='topup'>Topup</NavLink></span>
                     <span><NavLink to='games'>Games</NavLink></span>
+                    <Cart/>
+                    {/* todo: add cart button here, with fetch cart endpoint. If data exist --> set notif icon */}
                 </div>
             </nav>
 
