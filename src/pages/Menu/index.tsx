@@ -77,13 +77,13 @@ const Menu = (): JSX.Element => {
                                     return (
                                         <div key={i} className="col-lg-6 mt-1 mb-1 menu-item">
                                             <PromotionCard
-                                                    menuName= {val.Name}
-                                                    description= {val.Description}
-                                                    promotionPhoto= {val.PromotionPhoto}
-                                                    discountRate= {val.DiscountRate}
-                                                    startAt= {val.StartAt}
-                                                    expiredAt= {val.ExpiredAt}
-                                                    promotionMenus={val.PromoMenus}
+                                                    menu_name= {val.name}
+                                                    description= {val.description}
+                                                    promotion_photo= {val.promotion_photo}
+                                                    discount_rate= {val.discount_rate}
+                                                    start_at= {val.start_at}
+                                                    expired_at= {val.expired_at}
+                                                    promotion_menus={val.promo_menus}
                                             />
                                         </div>
                                     )
@@ -134,12 +134,13 @@ const Menu = (): JSX.Element => {
                                 return (
                                     <div key={i} className="col-lg-3 mt-1 mb-1 menu-item">
                                         <MenuCard
-                                            menuName={val.MenuName}
-                                            avgRating={val.AvgRating}
-                                            numberOfFavorites={val.NumberOfFavorites}
-                                            price={val.Price}
-                                            menuPhoto={val.MenuPhoto}
-                                            categoryId={val.CategoryId}
+                                            menu_id={val.id}
+                                            menu_name={val.menu_name}
+                                            avg_rating={val.avg_rating}
+                                            number_of_favorites={val.number_of_favorites}
+                                            price={val.price}
+                                            menu_photo={val.menu_photo}
+                                            category_id={val.category_id}
                                         />
                                     </div>
                                 )

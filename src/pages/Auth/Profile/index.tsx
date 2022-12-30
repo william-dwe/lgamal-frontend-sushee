@@ -28,11 +28,11 @@ const Profile = (): JSX.Element => {
     useEffect(()=>{
         if (response){
             setCurrentProfileDetail(response)
-            setFullName(response.data.FullName)
-            setUsername(response.data.Username)
-            setEmail(response.data.Email)
-            setPhone(response.data.Phone)
-            setPreview(response.data.ProfilePicture)
+            setFullName(response.data.full_name)
+            setUsername(response.data.username)
+            setEmail(response.data.email)
+            setPhone(response.data.phone)
+            setPreview(response.data.profile_picture)
         }
     }, [response])
 

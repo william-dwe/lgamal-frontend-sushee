@@ -11,12 +11,12 @@ import Button from '../../../components/Button';
 
 
 export default function Register():JSX.Element {
-    const [fullName, setFullName] = React.useState('')
+    const [full_name, setFullName] = React.useState('')
     const [username, setUsername] = React.useState('')
     const [phone, setPhone] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
-    const [register, { isLoading }] = useRegisterMutation()
+    const [register, {error}] = useRegisterMutation()
 
 
     const dispatch = useDispatch()
@@ -25,7 +25,7 @@ export default function Register():JSX.Element {
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         try {
-          const userData = await register({fullName, email, phone, username, password}).unwrap()
+          const userData = await register({full_name, email, phone, username, password}).unwrap()
           dispatch(setCredentials({...userData, username}))
           setFullName('')
           setUsername('')
@@ -44,7 +44,7 @@ export default function Register():JSX.Element {
     const handleEmailInput = (e: any) => setEmail(e.target.value)
     const handlePasswordInput = (e: any) => setPassword(e.target.value)
 
-    const content =  isLoading ? <Loader/> : (
+    const content =  !register && !error ? <Loader/> : (
     <section className='register'>
         <div className="content" >
             <h1>Register</h1>

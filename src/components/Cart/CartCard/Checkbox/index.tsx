@@ -1,10 +1,19 @@
 import React from 'react'
 import './index.scss'
+import { useSelector } from 'react-redux';
+import { selectSelectedCart } from '../../../../features/cartSlice';
 
-function CheckBox(): JSX.Element {
+type Props = {
+    id: number;
+    onChange: (e: any) => void
+} 
+
+function CheckBox(props: Props): JSX.Element {
+  const selectedCart = useSelector(selectSelectedCart)
+  
   return (
     <label className="checkbox-container">
-        <input type="checkbox"/>
+        <input type="checkbox" onClick={props.onChange} checked={selectedCart.includes(props.id)}/>
         <span className="checkbox"></span>
     </label>
   )

@@ -18,14 +18,38 @@ div.cart_card {
             color: $base-black;
             font-size: 2rem;
             margin-bottom: 0;
+
+            span.promo {
+                font-size: 0.875rem;
+            }
         }
         
         p.card-text {
             font-size: 1rem;
         }
 
-        p.quantity {
-            font-size: 0.75rem;
+        div.quantity {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+
+            p.quantity {
+                font-size: 0.75rem;
+                padding-top: 0;   
+            }
+        }
+
+        div.price {
+            .prev-price {
+                font-size: 0.75rem;
+                text-decoration: line-through;
+            }
+            
+            .current-price {
+                font-size: 1rem;
+            }
         }
     }
 }

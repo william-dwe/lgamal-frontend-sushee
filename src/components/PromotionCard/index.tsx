@@ -4,27 +4,27 @@ import { FaShoppingCart } from "react-icons/fa";
 import PromotionItem from './PromotionItem';
 
 type Props = {
-    menuName: string
+    menu_name: string
     description: string
-    promotionPhoto: string
-    discountRate: number
-    startAt: Date
-    expiredAt: Date
-    promotionMenus: [
+    promotion_photo: string
+    discount_rate: number
+    start_at: Date
+    expired_at: Date
+    promotion_menus: [
 		{
 			id: number;
-			PromotionId: number;
-			MenuId: number;
-			Menu: {
+			promotion_id: number;
+			menu_id: number;
+			menu: {
 				id: number;
-				Menu_name: string;
-				AvgRating: number;
-				NumberOfFavorites: number;
-				Price: number;
-				MenuPhoto: string;
-				CategoryId: number;
+				menu_name: string;
+				avg_rating: number;
+				number_of_favorites: number;
+				price: number;
+				menu_photo: string;
+				category_id: number;
 			}
-			PromotionPrice: number;
+			promotion_price: number;
 		}
 	]
 }
@@ -32,21 +32,21 @@ type Props = {
 export default function PromotionCard(props: Props): JSX.Element {
     return (
         <div className="card">
-            <img src={props.promotionPhoto} className="card-img" alt={props.menuName}/>
+            <img src={props.promotion_photo} className="card-img" alt={props.menu_name}/>
             <div className="card-body">
-                <h5 className="card-title">{props.menuName}</h5>
+                <h5 className="card-title">{props.menu_name}</h5>
                 <p className="card-description">{props.description}</p>
             </div>
             <div className="card-footer">
                 <div className="priceAndCart">
-                        { props.promotionMenus 
-                            ? props.promotionMenus.map((val, i) => {
+                        { props.promotion_menus 
+                            ? props.promotion_menus.map((val, i) => {
                                 return <PromotionItem 
                                     id={val.id}
-                                    PromotionId={val.PromotionId}
-                                    MenuId={val.MenuId}
-                                    Menu= {val.Menu}
-                                    PromotionPrice= {val.PromotionPrice}
+                                    promotion_id={val.promotion_id}
+                                    menu_id={val.menu_id}
+                                    menu= {val.menu}
+                                    promotion_price= {val.promotion_price}
                                     key={i}
                                 />
                             })

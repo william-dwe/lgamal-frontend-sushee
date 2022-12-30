@@ -1,11 +1,11 @@
 export interface IMenu {
-    id: string;
-    MenuName: string;
-	AvgRating: number;
-	NumberOfFavorites: number;
-	Price: number;
-	MenuPhoto: string;
-	CategoryId: number
+    id: number;
+    menu_name: string;
+	avg_rating: number;
+	number_of_favorites: number;
+	price: number;
+	menu_photo: string;
+	category_id: number
 }
 
 export interface IMenuLists {
@@ -26,28 +26,28 @@ export interface IMenuQuery {
 
 export interface IPromotion {
     id: number;
-    AdminId: number;
-	Name: string;
-	Description: string;
-	PromotionPhoto: string;
-	DiscountRate: number;
-	StartAt: Date;
-	ExpiredAt: Date;
-	PromoMenus: [
+    admin_id: number;
+	name: string;
+	description: string;
+	promotion_photo: string;
+	discount_rate: number;
+	start_at: Date;
+	expired_at: Date;
+	promo_menus: [
 		{
 			id: number;
-			PromotionId: number;
-			MenuId: number;
-			Menu: {
+			promotion_id: number;
+			menu_id: number;
+			menu: {
 				id: number;
-				MenuName: string;
-				AvgRating: number;
-				NumberOfFavorites: number;
-				Price: number;
-				MenuPhoto: string;
-				CategoryId: number;
+				menu_name: string;
+				avg_rating: number;
+				number_of_favorites: number;
+				price: number;
+				menu_photo: string;
+				category_id: number;
 			}
-			PromotionPrice: number;
+			promotion_price: number;
 		}
 	]
 }

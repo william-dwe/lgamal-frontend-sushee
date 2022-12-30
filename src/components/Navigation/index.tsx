@@ -15,7 +15,7 @@ export default function Navigation(): JSX.Element {
                     <span><NavLink end to='profile'>Profile</NavLink></span>
                     <span><NavLink to='games'>Games</NavLink></span>
                     <Cart/>
-                    {/* todo: add cart button here, with fetch cart endpoint. If data exist --> set notif icon */}
+                    {/* todo: add cart button here, with fetch cart endpoint [done]. If data exist --> set notif icon */}
                 </div>
             </nav>
 

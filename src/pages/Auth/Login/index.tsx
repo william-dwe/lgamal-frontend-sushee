@@ -12,7 +12,7 @@ import Button from '../../../components/Button';
 export default function Login():JSX.Element {
     const [identifier, setIdentifier] = React.useState('')
     const [password, setPassword] = React.useState('')
-    const [login, { isLoading }] = useLoginMutation()
+    const [login, { error }] = useLoginMutation()
 
     const dispatch = useDispatch()
     const location = useLocation()
@@ -35,7 +35,7 @@ export default function Login():JSX.Element {
     const handleIdentifierInput = (e: any) => setIdentifier(e.target.value)
     const handlePasswordInput = (e: any) => setPassword(e.target.value)
 
-    const content = isLoading ? <Loader/> : (
+    const content = !login && !error  ? <Loader/> : (
         <section className='login'>
             <div className='content'>
                 <h1>Login</h1>

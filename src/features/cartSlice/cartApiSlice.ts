@@ -25,7 +25,7 @@ export const cartApiSlice = apiSlices.injectEndpoints({
         }),
         postUpdateCart: builder.mutation<any, ICartPostReq>({
             query: (payload) => ({
-                url: `/carts/${payload.cartId}`,
+                url: `/carts/${payload.cart_id}`,
                 method: 'POST',
                 body: {... payload},
                 headers: {

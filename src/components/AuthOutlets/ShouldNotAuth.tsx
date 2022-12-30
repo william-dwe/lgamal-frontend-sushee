@@ -7,7 +7,6 @@ import jwtDecode from 'jwt-decode'
 
 
 const ShouldNotAuth = () : JSX.Element => {
-    const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -22,7 +21,7 @@ const ShouldNotAuth = () : JSX.Element => {
 
     useEffect(() => {
         if (isSuccess && !authToken) {
-            const newAccessToken = response.data.accessToken
+            const newAccessToken = response.data.access_token
             const userDetail = jwtDecode(newAccessToken) as any
             const username = userDetail.username
             dispatch(setCredentials({...response, username}))

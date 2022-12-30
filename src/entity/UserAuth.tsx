@@ -3,7 +3,7 @@ export interface IAuthReqLogin {
     password: string;
 }
 export interface IAuthReqRegister {
-    fullName: string;
+    full_name: string;
     email: string;
     phone: string
     username: string;
@@ -16,13 +16,13 @@ export interface IToken {
 
 export interface IUserContext {
     data: {
-        FullName : string;
-        Username : string;
-        Email : string;
-        Phone : string;
-        ProfilePicture : string;
-        PlayAttempt : number;
-        RoleId : number;
+        full_name : string;
+        username : string;
+        email : string;
+        phone : string;
+        profile_picture : string;
+        play_attempt : number;
+        role_id : number;
     }
 }
 export interface ITokenContent {
@@ -32,14 +32,14 @@ export interface ITokenContent {
 }
 
 export interface IAuthReqRegister {
-    fullName: string;
+    full_name: string;
     email: string;
     username: string;
     password: string;
 }
 
 export interface IAuthReqEditProfile {
-    fullName: string;
+    full_name: string;
     phone: string;
     email: string;
     password: string;

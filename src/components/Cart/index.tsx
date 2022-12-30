@@ -8,7 +8,6 @@ export default function Cart(): JSX.Element {
     const cartToggle = useSelector(selectCartToggle)
 
     const handleOpenCart = ((e: any) => {
-        console.log("TRIGGER cart: ", cartToggle)
         dispatch(setCartToggle(!cartToggle))
     })
 
