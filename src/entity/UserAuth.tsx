@@ -10,6 +10,10 @@ export interface IAuthReqRegister {
     password: string;
 }
 
+export interface IToken {
+    access_token: string;
+}
+
 export interface IUserContext {
     data: {
         FullName : string;

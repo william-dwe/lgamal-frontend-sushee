@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import "bootstrap/dist/js/bootstrap.min.js";
 import Menu from './pages/Menu';
 import CartOffCanvas from './components/Cart/CartOffcanvas';
 
@@ -33,7 +34,7 @@ function App(): JSX.Element {
               <Route element={<Navigation/>}>
                 {/* todo:
                 1. bikin card cart [done] 
-                1.b. fetch carts
+                1.b. fetch carts [done]
                 2. bikin mekanisme add cart
                 3. ketika "add" diclick:
                   > change tombol add cart jadi jumlah item --> lsg fire submit cart
@@ -43,8 +44,8 @@ function App(): JSX.Element {
                       > update value when clicked
                  */}
                 <Route path ='/' element={<Menu/>}/>
+                <Route path='/profile' element={<Profile/>}/>
               </Route>
-              <Route path='/profile' element={<Profile/>}/>
             </Route>
           </Route>
           <Route path="*" element={<NotFound/>}/>

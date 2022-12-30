@@ -19,14 +19,16 @@ export default function MenuCard(props: Props): JSX.Element {
             <div className="card-footer">
                 <h5 className="card-title">{props.menuName}</h5>
                 <p className="card-text">IDR {(props.price).toLocaleString('id-ID')}</p>
-                <div className="ratingAndFavorite">
-                    <div className="rating">
+                <div className="ratingFavoriteCart">
+                    <div className="ratingFavorite">
+                        <div className="rating">
                         <p className="card-text">{props.avgRating.toFixed(2)}</p>
-                        <FaStar/>
-                    </div>
-                    <div className="favorite">
+                            <FaStar/>
+                        </div>
+                        <div className="favorite">
                         <p className="card-text">{props.numberOfFavorites > 1000 ? "1K+" : props.numberOfFavorites}</p>
-                        <FaHeart/>
+                            <FaHeart/>
+                        </div>
                     </div>
                     <button className='btn btn-success'><FaShoppingCart/>Cart</button>
                 </div>

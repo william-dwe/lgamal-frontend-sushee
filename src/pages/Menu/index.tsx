@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./index.scss"
 import MenuCard from '../../components/MenuCard'
-import { menuApiSlice, useMenusQuery, usePromotionsQuery } from '../../features/menuSlice/menuApiSlice'
+import { menuApiSlice, useGetMenusQuery, useGetPromotionsQuery } from '../../features/menuSlice/menuApiSlice'
 import Loader from '../../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectFilterQuery, setFilterQuery } from '../../features/menuSlice'
@@ -13,12 +13,12 @@ const Menu = (): JSX.Element => {
     const hero1 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672109205/sources/wallpaperflare.com_wallpaper_wtqler.jpg"
     const hero2 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672122757/sources/wallpaperflare.com_wallpaper_1_nekcbo.jpg"
     const hero3 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672122755/sources/wallpaperflare.com_wallpaper_2_vhqq27.jpg"
-
+    const [slideState, setSlideState] = useState(1)
 
     const dispatch = useDispatch()
     const filterQuery = useSelector(selectFilterQuery)
-    const { data: menu, isLoading: isMenuLoading } = useMenusQuery(filterQuery)
-    const { data: promotion, isError: isPromotionError, isLoading: isPromotionLoading } = usePromotionsQuery()
+    const { data: menu, isLoading: isMenuLoading } = useGetMenusQuery(filterQuery)
+    const { data: promotion, isError: isPromotionError, isLoading: isPromotionLoading } = useGetPromotionsQuery()
     
     const handleFilter = ((e: any) => {
         const newFilterQuery = {...filterQuery}
@@ -26,37 +26,40 @@ const Menu = (): JSX.Element => {
         dispatch(setFilterQuery(newFilterQuery))
     })
 
-    const handleHidingNavOnScroll = (e: any) => {
-        console.log('scrollTop: ', e.currentTarget.scrollTop);
-        console.log('offsetHeight: ', e.currentTarget.offsetHeight);
-    }
+    useEffect(() => {
+        const interval = setInterval(()=>{
+            setSlideState((x)=>(x+1) % 4 === 0 ? 1 : x+1)
+        }, 5000);
+      
+        return () => clearInterval(interval);
+      }, []);
+
+    
 
     const content = (
-        <div className='main' onScroll={handleHidingNavOnScroll}>
+        <div className='main'>
             <section className="hero">
-                <div id="menuHeroCarousel" className="carousel slide" data-bs-ride="carousel" data-interval="3000" data-bs-touch="false">
-                    <div className="carousel-inner">
-                        <div className="carousel-item active">
-                        <img src={hero1} className="d-block w-100" alt="slide 1"/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>Fine sushi dining in one-click away</h5>
-                            <p>Experience your favorite japanese meals at its finest.</p>
-                        </div>
-                        </div>
-                        <div className="carousel-item">
-                        <img src={hero2} className="d-block w-100" alt="slide 2"/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>Second slide label</h5>
-                            <p>Some representative placeholder content for the second slide.</p>
-                        </div>
-                        </div>
-                        <div className="carousel-item">
-                        <img src={hero3} className="d-block w-100" alt="slide 3"/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>Third slide label</h5>
-                            <p>Some representative placeholder content for the third slide.</p>
-                        </div>
-                        </div>
+                <div className="carousel-inner">
+                    <div className={`carousel-item ${slideState === 1 ? "active" : ""}`}>
+                    <img src={hero1} className="d-block w-100" alt="slide 1"/>
+                    <div className="carousel-caption d-none d-md-block">
+                        <h5>Fine sushi dining in one-click away</h5>
+                        <p>Experience your favorite japanese meals at its finest.</p>
+                    </div>
+                    </div>
+                    <div className={`carousel-item ${slideState === 2 ? "active" : ""}`}>
+                    <img src={hero2} className="d-block w-100" alt="slide 2"/>
+                    <div className="carousel-caption d-none d-md-block">
+                        <h5>Fine sushi dining in one-click away</h5>
+                        <p>Experience your favorite japanese meals at its finest.</p>
+                    </div>
+                    </div>
+                    <div className={`carousel-item ${slideState === 3 ? "active" : ""}`}>
+                    <img src={hero3} className="d-block w-100" alt="slide 3"/>
+                    <div className="carousel-caption d-none d-md-block">
+                        <h5>Fine sushi dining in one-click away</h5>
+                        <p>Experience your favorite japanese meals at its finest.</p>
+                    </div>
                     </div>
                 </div>
             </section>

@@ -17,7 +17,7 @@ type Props = {
 			MenuId: number;
 			Menu: {
 				id: number;
-				MenuName: string;
+				Menu_name: string;
 				AvgRating: number;
 				NumberOfFavorites: number;
 				Price: number;

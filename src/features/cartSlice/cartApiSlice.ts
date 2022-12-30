@@ -1,10 +1,10 @@
 import { IRes } from "../../entity";
 import { apiSlices } from "../../app/api/apiSlice";
-import { ICartLists } from "../../entity/Carts";
+import { ICartLists, ICartPostReq } from "../../entity/Carts";
 
 export const cartApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
-        carts: builder.query<IRes<ICartLists>, void>({
+        getCarts: builder.query<IRes<ICartLists>, void>({
             query: () => {
                 return ({
                     url: '/carts'
@@ -12,9 +12,49 @@ export const cartApiSlice = apiSlices.injectEndpoints({
             },
             providesTags: ['Cart']
         }),
+        postCarts: builder.mutation<any, ICartPostReq>({
+            query: (payload) => ({
+                url: "/carts",
+                method: 'POST',
+                body: {... payload},
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                }
+            }),
+            invalidatesTags: ['Cart']
+        }),
+        postUpdateCart: builder.mutation<any, ICartPostReq>({
+            query: (payload) => ({
+                url: `/carts/${payload.cartId}`,
+                method: 'POST',
+                body: {... payload},
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                }
+            }),
+            invalidatesTags: ['Cart']
+        }),
+        deleteCarts: builder.mutation<any, number>({
+            query: (cartId) => ({
+                url: `/carts/${cartId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Cart']
+        }),
+        deleteAllCarts: builder.mutation<any, void>({
+            query: () => ({
+                url: "/carts",
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Cart']
+        }),
     })
 })
 
 export const {
-    useCartsQuery,
+    useGetCartsQuery,
+    usePostCartsMutation,
+    usePostUpdateCartMutation,
+    useDeleteCartsMutation,
+    useDeleteAllCartsMutation
 } = cartApiSlice

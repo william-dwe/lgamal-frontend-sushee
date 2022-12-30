@@ -3,8 +3,10 @@ import "./index.scss"
 import Menu from '../../../pages/Menu';
 import CheckBox from './Checkbox';
 import DeleteButton from './DeleteButton';
+import { useDeleteCartsMutation } from '../../../features/cartSlice/cartApiSlice';
 
 type Props = {
+    ID: number,
     Menu: {
         ID: number,
         MenuName: string,
@@ -20,13 +22,19 @@ type Props = {
 }
 
 export default function CartCard(props: Props): JSX.Element {
+    const [deleteCarts, { isLoading }] = useDeleteCartsMutation()
+
+    const handleDelete = () => {
+        deleteCarts(props.ID)
+    } 
+
     return (
         <div className="card cart_card">
             <div className="row">
                 <div className="d-flex align-items-center col-md-1">
                     <CheckBox/>
                 </div>
-                <div className="col-md-3">
+                <div className="d-flex align-items-center col-md-3"> 
                     <img src={props.Menu.MenuPhoto} className="img-fluid rounded-start" alt="..."/>
                 </div>
                 <div className="d-flex align-items-center col-md-7">
@@ -40,7 +48,7 @@ export default function CartCard(props: Props): JSX.Element {
                 </div>
                 
                 <div className="d-flex align-items-center col-md-1">
-                    <DeleteButton/>
+                    <DeleteButton handleDelete={handleDelete}/>
                 </div>
             </div>
         </div>

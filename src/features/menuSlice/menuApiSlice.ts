@@ -4,7 +4,7 @@ import { apiSlices } from "../../app/api/apiSlice";
 
 export const menuApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
-        menus: builder.query<IRes<IMenuLists>, IMenuQuery>({
+        getMenus: builder.query<IRes<IMenuLists>, IMenuQuery>({
             query: (args) => {
                 return ({
                     url: '/menus',
@@ -13,7 +13,7 @@ export const menuApiSlice = apiSlices.injectEndpoints({
             },
             providesTags: ['Menu']
         }),
-        promotions: builder.query<IRes<IPromotionLists>, void>({
+        getPromotions: builder.query<IRes<IPromotionLists>, void>({
             query: () => ({
                 url: '/promotions'
             }),
@@ -23,6 +23,6 @@ export const menuApiSlice = apiSlices.injectEndpoints({
 })
 
 export const {
-    useMenusQuery,
-    usePromotionsQuery
+    useGetMenusQuery,
+    useGetPromotionsQuery
 } = menuApiSlice

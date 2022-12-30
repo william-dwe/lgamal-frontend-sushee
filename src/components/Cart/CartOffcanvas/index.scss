@@ -25,6 +25,15 @@
                 color: white;
                 font-weight: bold;
             }
+
+            div.cart-footer {
+                position: fixed;
+                right: 1%;
+                bottom: 1%;
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+            }
         }
     
         &.cart-open {

@@ -9,7 +9,7 @@ type Props = {
 
 function Button(props: Props): JSX.Element {
   return (
-    <button className="btn btn-outline-warning" type={props.type} onSubmit={props.onsubmit}>{props.text}</button>
+    <button className="btn btn-outline-warning template-button" type={props.type} onSubmit={props.onsubmit}>{props.text}</button>
   )
 }
 

@@ -17,6 +17,13 @@ export interface ICart {
     IsOrdered: boolean
 }
 
+export interface ICartPostReq {
+    cartId: number,
+    menu_id: number,
+    promotion_id: number,
+    quantity: number,
+    menu_option: any,
+}
 export interface ICartLists {
     carts: ICart[];
 }

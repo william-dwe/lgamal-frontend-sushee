@@ -1,5 +1,6 @@
 import { apiSlices } from "../../app/api/apiSlice";
-import { IAuthReqLogin, IAuthReqRegister } from "../../entity/UserAuth";
+import { IRes } from "../../entity";
+import { IAuthReqLogin, IAuthReqRegister, IToken } from "../../entity/UserAuth";
 
 export const authApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
@@ -23,7 +24,7 @@ export const authApiSlice = apiSlices.injectEndpoints({
                 }
             }),
         }),
-        refresh: builder.query<any, void>({
+        refresh: builder.query<IRes<IToken>, void>({
             query: () => ({
                 url: '/refresh',
                 headers: {

@@ -4,18 +4,24 @@ import { selectCartToggle, setCartToggle } from '../../../features/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 import CartCard from '../CartCard';
-import { useCartsQuery } from '../../../features/cartSlice/cartApiSlice';
+import { useDeleteAllCartsMutation, useGetCartsQuery } from '../../../features/cartSlice/cartApiSlice';
+import Button from '../../Button';
 
 export default function CartOffCanvas(): JSX.Element {
     const dispatch = useDispatch()
     const cartToggle = useSelector(selectCartToggle)
 
     const handleOpenCart = ((e: any) => {
-        console.log("TRIGGER cart: ", cartToggle)
         dispatch(setCartToggle(!cartToggle))
     })
 
-    const { data: cart, isLoading: isCartLoading } = useCartsQuery()
+    const [deleteAllCarts, { isLoading }] = useDeleteAllCartsMutation()
+
+    const handleDelete = () => {
+        deleteAllCarts()
+    } 
+
+    const { data: cart, isLoading: isCartLoading } = useGetCartsQuery()
 
     return (
         <div className='cart-wrapper'>
@@ -28,6 +34,7 @@ export default function CartOffCanvas(): JSX.Element {
                         {!isCartLoading && cart
                         ? cart.data.carts.map((val, i) => {
                             return <CartCard
+                                ID={val.ID}
                                 Menu={val.Menu}
                                 PromotionId={val.PromotionId}
                                 Quantity={val.Quantity}
@@ -38,7 +45,11 @@ export default function CartOffCanvas(): JSX.Element {
                         :<></>
                     }
                     </div>
-                    
+                    <div className="cart-footer">
+                        <button className="delete-all btn btn-danger" onClick={handleDelete}>Delete All</button>
+                        <button className="order btn btn-success">Order Now!</button>
+
+                    </div>
                 </div>
             </div>
             <div className={`main-content ${cartToggle ? "cart-open" : "cart-close"}`}>
