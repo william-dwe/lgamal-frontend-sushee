@@ -4,7 +4,7 @@ import { ICartLists, ICartPostReq } from "../../entity/Carts";
 
 export const cartApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
-        getCarts: builder.query<IRes<ICartLists>, void>({
+        getCart: builder.query<IRes<ICartLists>, void>({
             query: () => {
                 return ({
                     url: '/carts'
@@ -52,7 +52,7 @@ export const cartApiSlice = apiSlices.injectEndpoints({
 })
 
 export const {
-    useGetCartsQuery,
+    useGetCartQuery,
     usePostCartsMutation,
     usePostUpdateCartMutation,
     useDeleteCartsMutation,

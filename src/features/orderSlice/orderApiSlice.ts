@@ -1,7 +1,7 @@
 import { IRes } from "../../entity";
 import { apiSlices } from "../../app/api/apiSlice";
 import { ICartLists, ICartPostReq } from "../../entity/Carts";
-import { IOrderReqBody } from "../../entity/Order";
+import { IOrderReqBody, IPaymentOptionResBody } from "../../entity/Order";
 
 export const orderApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
@@ -14,14 +14,18 @@ export const orderApiSlice = apiSlices.injectEndpoints({
                     'Content-type': 'application/json; charset=UTF-8',
                 }
             }),
-            //todo: bikin & tambahin tag order
             invalidatesTags: ['Cart']
         }),
+        getPaymentOption: builder.query<IRes<IPaymentOptionResBody>, void>({
+            query: () => ({
+                url: "/orders/payment",
+                method: 'GET',
+            }),
+        })
     })
 })
-// next todo: bikin payment option dropdown -> state di orderslice index.
-// select state -> taruh di payload slice post order ketika dipakai di component
 
 export const {
     usePostOrdersMutation,
+    useGetPaymentOptionQuery,
 } = orderApiSlice

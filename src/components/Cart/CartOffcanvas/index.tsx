@@ -4,16 +4,17 @@ import { removeCarts, selectCartToggle, selectSelectedCart, setCartToggle } from
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 import CartCard from '../CartCard';
-import { useDeleteAllCartsMutation, useGetCartsQuery } from '../../../features/cartSlice/cartApiSlice';
+import { useDeleteAllCartsMutation, useGetCartQuery } from '../../../features/cartSlice/cartApiSlice';
 import DropUp from '../../DropUp';
-import { usePostOrdersMutation } from '../../../features/orderSlice/orderApiSlice';
+import { useGetPaymentOptionQuery, usePostOrdersMutation } from '../../../features/orderSlice/orderApiSlice';
 import { IOrderReqBody } from '../../../entity/Order';
 
 export default function CartOffCanvas(): JSX.Element {
     const dispatch = useDispatch()
     const cartToggle = useSelector(selectCartToggle)
     const selectedCart = useSelector(selectSelectedCart)
-    const { data: cart, isLoading: isCartLoading } = useGetCartsQuery()
+    const {data: cart, isLoading: isCartLoading } = useGetCartQuery()
+    const {data: payment, isLoading: isPaymentLoading} = useGetPaymentOptionQuery()
 
     const handleOpenCart = ((e: any) => {
         dispatch(setCartToggle(!cartToggle))
@@ -62,18 +63,24 @@ export default function CartOffCanvas(): JSX.Element {
                     <hr/>
                     <p className="total">Total Price: IDR {!isCartLoading && cart 
                         ? (cart.data.carts.reduce((cum, x) => cum+x.menu.price*x.quantity*(selectedCart.includes(x.id)?1:0), 0)).toLocaleString('id-ID')
-                        : 0}</p>
+                        : 0}
+                    </p>
                     <div className="cart-footer">
                         <button className="delete-all btn btn-danger" onClick={handleDelete}>Delete All</button>
-                        <DropUp text="Order Now!" content={[{
-                            label: "Cash",
-                            value: 1,
-                            handler: handleOrder,
-                        }, {
-                            label: "Credit Card",
-                            value: 2,
-                            handler: handleOrder,
-                        }]}/>
+                        {
+                            !isPaymentLoading && payment &&
+                            <DropUp text="Order Now!" content={
+                                payment.data.payment_options.map((val, i) => {
+                                    return {
+                                        label: val.payment_name,
+                                        value: val.id,
+                                        handler: handleOrder,
+                                        key: i,
+                                    }
+                                }
+                            )}
+                            />
+                        }
                     </div>
                 </div>
             </div>
