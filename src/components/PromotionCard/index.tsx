@@ -2,6 +2,7 @@ import React from 'react'
 import "./index.scss"
 import { FaShoppingCart } from "react-icons/fa";
 import PromotionItem from './PromotionItem';
+import { IMenuCustomization } from '../../entity/Menus';
 
 type Props = {
     menu_name: string
@@ -23,6 +24,7 @@ type Props = {
 				price: number;
 				menu_photo: string;
 				category_id: number;
+                customization?: IMenuCustomization[];
 			}
 			promotion_price: number;
 		}

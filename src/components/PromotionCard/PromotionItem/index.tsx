@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./index.scss"
 import {FaStar, FaShoppingCart } from "react-icons/fa";
 import { usePostCartsMutation } from '../../../features/cartSlice/cartApiSlice';
-import { ICartPostReq } from "../../../entity/Carts";
+import { ICartPostReq, ICustomization } from "../../../entity/Carts";
+import CustomizationModal from '../../CustomizationModal';
+import { IMenuCustomization } from '../../../entity/Menus';
 
 type Props = {
     id: number;
@@ -16,24 +18,46 @@ type Props = {
         price: number;
         menu_photo: string;
         category_id: number;
+        customization?: IMenuCustomization[];
     }
     promotion_price: number;
 }
 
 export default function PromotionItem(props: Props): JSX.Element {
-
+    const [customResult, setCustomResult] = useState({})
+    const [toggleCustom, setToggleCustom] = useState(false)
     const [postCarts] = usePostCartsMutation()
 
     const handleAddCart = (e:any) => {
+        if (props.menu.customization?.length !== 0) {
+            setToggleCustom(true)
+            return
+        }
+
         const newItemCart =  {
             menu_id: props.menu_id,
             promotion_id: props.promotion_id ? props.promotion_id: null,
             quantity: 1,
-            menu_option: "",
+            menu_option: {},
         } as ICartPostReq
 
         postCarts(newItemCart)
     }
+
+    const handleAddCartWithCustom = (e:any) => {
+        
+        const newItemCart =  {
+            menu_id: props.menu_id,
+            promotion_id: props.promotion_id ? props.promotion_id: null,
+            quantity: 1,
+            menu_option: customResult,
+        } as ICartPostReq
+
+        postCarts(newItemCart)
+        setCustomResult({})
+        setToggleCustom(false)
+    }
+
     return (
         <div className="promo-item">
             <h2>{props.menu.menu_name}</h2>
@@ -45,7 +69,21 @@ export default function PromotionItem(props: Props): JSX.Element {
                 <p className="card-text">{props.menu.avg_rating.toFixed(2)}</p>
                 <FaStar/>
             </div>
-            <button className='btn btn-success' onClick={handleAddCart}><FaShoppingCart/>Cart</button>
+            {
+                toggleCustom && props.menu.customization?.length !== 0
+                ? <></>
+                : <button className='btn btn-success' onClick={handleAddCart}><FaShoppingCart/>Cart</button>
+            }
+            {
+                toggleCustom && props.menu.customization && props.menu.customization?.length !== 0
+                ? <CustomizationModal 
+                    customization={props.menu.customization}
+                    customResult={customResult}
+                    setCustomResult={setCustomResult}
+                    handleSubmit={handleAddCartWithCustom}
+                />
+                :<></>
+            }
         </div>
     )
 }
