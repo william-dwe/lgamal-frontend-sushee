@@ -1,10 +1,13 @@
 import React from 'react'
 import "./index.scss"
-import { selectCartToggle, selectSelectedCart, setCartToggle } from '../../../features/cartSlice';
+import { removeCarts, selectCartToggle, selectSelectedCart, setCartToggle } from '../../../features/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 import CartCard from '../CartCard';
 import { useDeleteAllCartsMutation, useGetCartsQuery } from '../../../features/cartSlice/cartApiSlice';
+import DropUp from '../../DropUp';
+import { usePostOrdersMutation } from '../../../features/orderSlice/orderApiSlice';
+import { IOrderReqBody } from '../../../entity/Order';
 
 export default function CartOffCanvas(): JSX.Element {
     const dispatch = useDispatch()
@@ -20,6 +23,18 @@ export default function CartOffCanvas(): JSX.Element {
     const handleDelete = () => {
         deleteAllCarts()
     }
+
+
+    const [postOrders] = usePostOrdersMutation()
+
+    const handleOrder = (async (e: any) => {
+        const reqBody = {
+            cart_id_list: selectedCart,
+            payment_option_id: Number(e.target.value),
+        } as IOrderReqBody
+        postOrders(reqBody)
+        dispatch(removeCarts(selectedCart))
+    })
 
     return (
         <div className='cart-wrapper'>
@@ -50,7 +65,15 @@ export default function CartOffCanvas(): JSX.Element {
                         : 0}</p>
                     <div className="cart-footer">
                         <button className="delete-all btn btn-danger" onClick={handleDelete}>Delete All</button>
-                        <button className="order btn btn-success">Order Now!</button>
+                        <DropUp text="Order Now!" content={[{
+                            label: "Cash",
+                            value: 1,
+                            handler: handleOrder,
+                        }, {
+                            label: "Credit Card",
+                            value: 2,
+                            handler: handleOrder,
+                        }]}/>
                     </div>
                 </div>
             </div>

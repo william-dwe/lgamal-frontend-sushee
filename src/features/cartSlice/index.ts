@@ -18,13 +18,21 @@ const cartSlice = createSlice({
     removeCart: (state, action) => {
       state.selectedCart = state.selectedCart.filter(item => item !== action.payload)
     },
+    removeCarts: (state, action) => {
+      state.selectedCart = state.selectedCart.filter(item => {
+        return !action.payload.includes(item)
+      })
+    },
+    
   },
 })
 
 export const { 
     setCartToggle, 
     selectCart,
-    removeCart } = cartSlice.actions
+    removeCart,
+    removeCarts,
+} = cartSlice.actions
 
 export default cartSlice.reducer
 
