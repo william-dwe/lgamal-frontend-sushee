@@ -141,6 +141,7 @@ const Menu = (): JSX.Element => {
                                             price={val.price}
                                             menu_photo={val.menu_photo}
                                             category_id={val.category_id}
+                                            customization={val.customization}
                                         />
                                     </div>
                                 )

@@ -43,6 +43,7 @@ export default function CartCard(props: Props): JSX.Element {
             cart_id: props.id,
             quantity: props.quantity+1
         })
+        console.log("DEBUG",props.menu_option)
     }
 
     const dispatch = useDispatch()
@@ -65,7 +66,7 @@ export default function CartCard(props: Props): JSX.Element {
                 </div>
                 <div className="d-flex align-items-center col-md-7">
                     <div className="card-body">
-                        <h5 className="card-title"><span className='promo'>{props.promotion_id ? "[Special Offer] " :" "}</span>{props.menu.menu_name}</h5>
+                        <h5 className="card-title"><span className='promo'>{props.promotion_id ? "[Special Offer]" :""}<br/></span>{props.menu.menu_name}</h5>
                         <div className="container d-flex row">
                             <div className="quantity">
                                 <button className="btn minus" onClick={handleMinus}>-</button> 
@@ -80,6 +81,15 @@ export default function CartCard(props: Props): JSX.Element {
                                     : <div className="price"> 
                                         <p className="prev-price">IDR {(props.menu.price*props.quantity).toLocaleString('id-ID')}</p>
                                         <p className="current-price">IDR {(props.promotion_price*props.quantity).toLocaleString('id-ID')}</p> 
+                                    </div>
+                                }
+                                {
+                                    <div className="options">
+                                        {
+                                            Object.keys(props.menu_option).map((val, i) => {
+                                                return <p className="options-item" key={i}>{`${val}:${props.menu_option[val]}`}</p>
+                                            })   
+                                        }
                                     </div>
                                 }
                         </div>

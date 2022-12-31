@@ -1,3 +1,9 @@
+export interface IMenuCustomization {
+	title: string;
+	type: string;
+	options: string[];
+}
+
 export interface IMenu {
     id: number;
     menu_name: string;
@@ -5,7 +11,8 @@ export interface IMenu {
 	number_of_favorites: number;
 	price: number;
 	menu_photo: string;
-	category_id: number
+	category_id: number;
+	customization?: IMenuCustomization[];
 }
 
 export interface IMenuLists {
@@ -38,15 +45,7 @@ export interface IPromotion {
 			id: number;
 			promotion_id: number;
 			menu_id: number;
-			menu: {
-				id: number;
-				menu_name: string;
-				avg_rating: number;
-				number_of_favorites: number;
-				price: number;
-				menu_photo: string;
-				category_id: number;
-			}
+			menu: IMenu
 			promotion_price: number;
 		}
 	]

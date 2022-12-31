@@ -1,3 +1,8 @@
+export interface ICustomization {
+    title: string;
+    value: string[];
+}
+
 export interface ICart {
     id: number;
     user_id: number,

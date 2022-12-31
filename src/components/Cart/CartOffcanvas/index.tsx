@@ -47,6 +47,7 @@ export default function CartOffCanvas(): JSX.Element {
                     <div className="container">
                         {!isCartLoading && cart
                         ? cart.data.carts.map((val, i) => {
+                            console.log("DEBUG-",i,val)
                             return <CartCard
                                 id={val.id}
                                 menu={val.menu}
@@ -60,11 +61,17 @@ export default function CartOffCanvas(): JSX.Element {
                         :<></>
                     }
                     </div>
-                    <hr/>
-                    <p className="total">Total Price: IDR {!isCartLoading && cart 
-                        ? (cart.data.carts.reduce((cum, x) => cum+x.menu.price*x.quantity*(selectedCart.includes(x.id)?1:0), 0)).toLocaleString('id-ID')
-                        : 0}
-                    </p>
+                    {
+                        cart?.data.carts.length !== 0
+                        ? <>
+                            <hr/>
+                            <p className="total">Total Price: IDR {!isCartLoading && cart 
+                            ? (cart.data.carts.reduce((cum, x) => cum+x.menu.price*x.quantity*(selectedCart.includes(x.id)?1:0), 0)).toLocaleString('id-ID')
+                            : 0}
+                            </p>
+                        </>
+                        : <p className='note'>Add some item here :D!</p>
+                    }
                     <div className="cart-footer">
                         <button className="delete-all btn btn-danger" onClick={handleDelete}>Delete All</button>
                         {
