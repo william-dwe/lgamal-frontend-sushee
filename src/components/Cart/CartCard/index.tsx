@@ -87,7 +87,7 @@ export default function CartCard(props: Props): JSX.Element {
                                     <div className="options">
                                         {
                                             Object.keys(props.menu_option).map((val, i) => {
-                                                return <p className="options-item" key={i}>{`${val}:${props.menu_option[val]}`}</p>
+                                                return <p className="options-item" key={i}>{`${val}: ${props.menu_option[val]}`}</p>
                                             })   
                                         }
                                     </div>

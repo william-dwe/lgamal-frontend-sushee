@@ -6,13 +6,13 @@ div {
         position: fixed;
         width: 100%;
         top: 0;
-        background-color: none;
+        background: rgba(1,1,1,0.5);
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         padding: 2vh 15vw;
-    
+
         p.logo {
             color: $base-orange;
             font-size: 2rem;

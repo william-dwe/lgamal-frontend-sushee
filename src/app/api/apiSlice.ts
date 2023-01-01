@@ -1,7 +1,6 @@
 import { BaseQueryApi, BaseQueryFn, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, logOut } from '../../features/authSlice'
 import { RootState } from '../store'
-import { useNavigate } from 'react-router'
 
 const baseUrl = (process.env.REACT_APP_BACKEND_URL ? process.env.REACT_APP_BACKEND_URL : 'http://localhost:8080/v1')
 const baseQuery = fetchBaseQuery({
@@ -29,8 +28,6 @@ const baseQueryWithReauth: BaseQueryFn = async (args: string, api: BaseQueryApi,
             return result
         }
         api.dispatch(logOut())
-        const navigate = useNavigate()
-        navigate('/login')
     }
     return result
 }

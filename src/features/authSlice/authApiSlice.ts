@@ -31,7 +31,6 @@ export const authApiSlice = apiSlices.injectEndpoints({
                     'Content-type': 'application/json; charset=UTF-8',
                 }
             }),
-            keepUnusedDataFor: 60,
         })
     })
 })

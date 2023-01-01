@@ -3,6 +3,7 @@ import "./index.scss"
 import {FaStar, FaShoppingCart } from "react-icons/fa";
 import { usePostCartsMutation } from '../../../features/cartSlice/cartApiSlice';
 import { ICartPostReq, ICustomization } from "../../../entity/Carts";
+import { toast } from 'react-toastify';
 import CustomizationModal from '../../CustomizationModal';
 import { IMenuCustomization } from '../../../entity/Menus';
 
@@ -42,6 +43,7 @@ export default function PromotionItem(props: Props): JSX.Element {
         } as ICartPostReq
 
         postCarts(newItemCart)
+        toast.success(`"${props.menu.menu_name}" added to the cart`)
     }
 
     const handleAddCartWithCustom = (e:any) => {
@@ -56,6 +58,7 @@ export default function PromotionItem(props: Props): JSX.Element {
         postCarts(newItemCart)
         setCustomResult({})
         setToggleCustom(false)
+        toast.success(`"${props.menu.menu_name}" added to the cart`)
     }
 
     return (

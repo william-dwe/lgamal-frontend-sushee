@@ -20,6 +20,7 @@ function RadioButton(props: Props): JSX.Element {
             autoComplete="off" 
             value={props.value}
             onChange={props.onChange}
+            defaultChecked={props.default}
         />
         <label 
             className="btn btn-outline-warning" 

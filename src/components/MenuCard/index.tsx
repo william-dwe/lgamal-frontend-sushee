@@ -3,8 +3,9 @@ import "./index.scss"
 import { FaStar, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { usePostCartsMutation } from '../../features/cartSlice/cartApiSlice';
 import { ICartPostReq } from "../../entity/Carts";
-import { IMenuCustomization } from '../../entity/Menus';
+import { toast } from 'react-toastify';
 import CustomizationModal from '../CustomizationModal';
+import { IMenuCustomization } from '../../entity/Menus';
 
 type Props = {
     menu_id: number;
@@ -23,7 +24,7 @@ export default function MenuCard(props: Props): JSX.Element {
     const [toggleCustom, setToggleCustom] = useState(false)
     const [postCarts] = usePostCartsMutation()
 
-    const handleAddCart = (e:any) => {
+    const handleAddCart = () => {
         if (props.customization?.length !== 0) {
             setToggleCustom(true)
             return
@@ -37,10 +38,11 @@ export default function MenuCard(props: Props): JSX.Element {
         } as ICartPostReq
 
         postCarts(newItemCart)
+        toast.success(`"${props.menu_name}" added to the cart`)
+
     }
 
-    const handleAddCartWithCustom = (e:any) => {
-        
+    const handleAddCartWithCustom = () => {
         const newItemCart =  {
             menu_id: props.menu_id,
             promotion_id: props.promotion_id ? props.promotion_id: null,
@@ -51,6 +53,7 @@ export default function MenuCard(props: Props): JSX.Element {
         postCarts(newItemCart)
         setCustomResult({})
         setToggleCustom(false)
+        toast.success(`"${props.menu_name}" added to the cart`)
     }
 
 

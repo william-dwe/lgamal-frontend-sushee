@@ -13,7 +13,7 @@ function CheckBox(props: Props): JSX.Element {
   
   return (
     <label className="checkbox-container">
-        <input type="checkbox" onClick={props.onChange} checked={selectedCart.includes(props.id)}/>
+        <input type="checkbox" onChange={props.onChange} checked={selectedCart.includes(props.id)}/>
         <span className="checkbox"></span>
     </label>
   )
