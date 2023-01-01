@@ -47,7 +47,6 @@ export default function CartOffCanvas(): JSX.Element {
                     <div className="container">
                         {!isCartLoading && cart
                         ? cart.data.carts.map((val, i) => {
-                            console.log("DEBUG-",i,val)
                             return <CartCard
                                 id={val.id}
                                 menu={val.menu}
@@ -66,7 +65,13 @@ export default function CartOffCanvas(): JSX.Element {
                         ? <>
                             <hr/>
                             <p className="total">Total Price: IDR {!isCartLoading && cart 
-                            ? (cart.data.carts.reduce((cum, x) => cum+x.menu.price*x.quantity*(selectedCart.includes(x.id)?1:0), 0)).toLocaleString('id-ID')
+                            ? (cart.data.carts.reduce((cum, x) => {
+                                if (!selectedCart.includes(x.id)) {
+                                    return cum+0
+                                }
+                                const item_price = x.promotion_price ? x.promotion_price : x.menu.price
+                                return cum+item_price*x.quantity
+                            }, 0)).toLocaleString('id-ID')
                             : 0}
                             </p>
                         </>

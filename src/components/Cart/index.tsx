@@ -4,13 +4,20 @@ import { selectCartToggle, setCartToggle } from '../../features/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetCartQuery } from '../../features/cartSlice/cartApiSlice';
 import {BsFillCartFill} from 'react-icons/bs'
+import { selectCurrentToken, selectModalToggle, setModalToggle } from '../../features/authSlice';
 
 export default function Cart(): JSX.Element {
     const dispatch = useDispatch()
     const cartToggle = useSelector(selectCartToggle)
+    const modalToggle = useSelector(selectModalToggle)
+    const authToken = useSelector(selectCurrentToken)
     const {data: cart, isLoading: isCartLoading } = useGetCartQuery()
 
     const handleOpenCart = ((e: any) => {
+        if (!authToken) {
+            dispatch(setModalToggle(!modalToggle))
+            return
+        }
         dispatch(setCartToggle(!cartToggle))
     })
 

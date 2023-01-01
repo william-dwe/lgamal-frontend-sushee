@@ -20,7 +20,7 @@ const ShouldAuth = () : JSX.Element => {
     const authToken = useSelector(selectCurrentToken)
 
     useEffect(() => {
-        if (isSuccess && !authToken) {
+        if (isSuccess) {
             const newAccessToken = response.data.access_token
             const userDetail = jwtDecode(newAccessToken) as any
             const username = userDetail.username
@@ -28,12 +28,12 @@ const ShouldAuth = () : JSX.Element => {
         }
     }, [response])
 
-    const content = ( 
-        !isLoading && isError 
-        ? <Navigate to="/login" state={{from: location}} replace/> 
-        : authToken
-            ? <Outlet/>
-            : <h1>loading...</h1>
+    const content = (
+        authToken 
+        ? <Outlet/>
+        : isLoading
+            ? <h1>loading...</h1>
+            : <Navigate to="/login" state={{from: location}} replace/> 
     )
     return content
 } 

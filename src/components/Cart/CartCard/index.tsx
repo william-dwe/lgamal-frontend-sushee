@@ -43,7 +43,6 @@ export default function CartCard(props: Props): JSX.Element {
             cart_id: props.id,
             quantity: props.quantity+1
         })
-        console.log("DEBUG",props.menu_option)
     }
 
     const dispatch = useDispatch()

@@ -6,6 +6,8 @@ import { ICartPostReq, ICustomization } from "../../../entity/Carts";
 import { toast } from 'react-toastify';
 import CustomizationModal from '../../CustomizationModal';
 import { IMenuCustomization } from '../../../entity/Menus';
+import { selectCurrentToken, selectModalToggle, setModalToggle } from '../../../features/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {
     id: number;
@@ -28,8 +30,19 @@ export default function PromotionItem(props: Props): JSX.Element {
     const [customResult, setCustomResult] = useState({})
     const [toggleCustom, setToggleCustom] = useState(false)
     const [postCarts] = usePostCartsMutation()
+    const authToken = useSelector(selectCurrentToken)
+
+
+    const dispatch = useDispatch()
+    const modalToggle = useSelector(selectModalToggle)
+
 
     const handleAddCart = (e:any) => {
+        if (!authToken) {
+            dispatch(setModalToggle(!modalToggle))
+            return
+        }
+
         if (props.menu.customization?.length !== 0) {
             setToggleCustom(true)
             return
