@@ -6,9 +6,7 @@ import Loader from '../../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectFilterQuery, setFilterQuery } from '../../features/menuSlice'
 import RadioButton from '../../components/RadioButton'
-import { apiSlices } from '../../app/api/apiSlice'
 import PromotionCard from '../../components/PromotionCard'
-import { selectCurrentRole } from '../../features/authSlice'
 
 const Menu = (): JSX.Element => {
     const hero1 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672109205/sources/wallpaperflare.com_wallpaper_wtqler.jpg"
@@ -20,11 +18,17 @@ const Menu = (): JSX.Element => {
     const filterQuery = useSelector(selectFilterQuery)
     const { data: menu, isLoading: isMenuLoading } = useGetMenusQuery(filterQuery)
     const { data: promotion, isError: isPromotionError, isLoading: isPromotionLoading } = useGetPromotionsQuery()
-    const role = useSelector(selectCurrentRole)
     
-    const handleFilter = ((e: any) => {
+    const handleFilterCategory = ((e: any) => {
         const newFilterQuery = {...filterQuery}
         newFilterQuery.filterByCategory = e.target.value
+        dispatch(setFilterQuery(newFilterQuery))
+    })
+
+    const handleFilterSearch = ((e: any) => {
+        const newFilterQuery = {...filterQuery}
+        newFilterQuery.search = e.target.value
+        console.log("DEBUG", e.target.value)
         dispatch(setFilterQuery(newFilterQuery))
     })
 
@@ -106,27 +110,28 @@ const Menu = (): JSX.Element => {
                                 groupName='menu-filter' 
                                 text='All Menu' 
                                 value='appetizers,meals,drinks'
-                                onChange={handleFilter}
+                                onChange={handleFilterCategory}
                                 default={true}
                             />
                             <RadioButton 
                                 groupName='menu-filter' 
                                 text='Appetizers' 
                                 value='appetizers'
-                                onChange={handleFilter}
+                                onChange={handleFilterCategory}
                             />
                             <RadioButton 
                                 groupName='menu-filter' 
                                 text='meals' 
                                 value='meals'
-                                onChange={handleFilter}
+                                onChange={handleFilterCategory}
                             />
                             <RadioButton 
                                 groupName='menu-filter' 
                                 text='drinks' 
                                 value='drinks'
-                                onChange={handleFilter}
+                                onChange={handleFilterCategory}
                             />
+                            <input type="text" onChange={handleFilterSearch} />
                         </div>
                     </div>
                     <div className="row menu-container">
