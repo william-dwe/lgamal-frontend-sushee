@@ -5,7 +5,10 @@ import { selectCurrentToken } from '../../../features/authSlice'
 import {IUserContext} from '../../../entity/UserAuth'
 import { useEditProfileMutation, useProfileQuery } from '../../../features/userSlice/userApiSlice'
 import Loader from '../../../components/Loader'
-
+import "./index.scss"
+import { useGetUserCouponQuery } from '../../../features/cartSlice/cartApiSlice'
+import {GiPriceTag} from 'react-icons/gi'
+import { toast } from 'react-toastify'
 
 const Profile = (): JSX.Element => {
     const [currentProfileDetail, setCurrentProfileDetail] = React.useState<IUserContext>()
@@ -15,6 +18,7 @@ const Profile = (): JSX.Element => {
     const [phone, setPhone] = React.useState('')
     const [preview, setPreview] = React.useState('')
     const [selectedFile, setSelectedFile] = React.useState()
+    const {data: coupon, isLoading: isCouponLoading } = useGetUserCouponQuery()
     
     const authToken = useSelector(selectCurrentToken)
     const {
@@ -70,6 +74,10 @@ const Profile = (): JSX.Element => {
         setSelectedFile(e.target.files[0])
     }
 
+    const handleCancel = () => {
+        setToggleEdit(false)
+    }
+
     const handleSubmit = (e: any) => {
         e.preventDefault()
         try {
@@ -82,26 +90,22 @@ const Profile = (): JSX.Element => {
             try {                
                 editProfilePicture(data)
                 setToggleEdit(false)
-            } catch (err) {
-                console.log(err)
+            } catch (err: any) {
+                toast.error(err.data.data.message)
             }
-
-
-        } catch (err) {
-            console.log(err)
+            toast.success('Profile updated')
+        } catch (err: any) {
+            toast.error(err.data.data.message)
         }
     }
 
     const content = (
         !authToken
         ? <Loader/>
-        :<section className='Profile'>
-            <h1>Profile</h1>
-            <form className="image-upload">
-                
-            </form>
-            <form className='content' onSubmit={handleSubmit}>
+        :<section className='profile'>
 
+            <form className='content' onSubmit={handleSubmit}>
+                <h1>Profile</h1>
                 <div className="profile">
                     <label htmlFor="file-input"><img src={preview} alt="profile"/></label>
                     <input 
@@ -145,10 +149,24 @@ const Profile = (): JSX.Element => {
                 />
                 {
                     toggleEdit
-                    ? <button type='submit'>Submit</button>
-                    : <button onClick={handleEdit}>Edit</button>
+                    ? <div className="buttons">
+                        <button className="btn btn-danger" onClick={handleCancel}>Cancel</button>
+                        <button className="btn btn-warning" type='submit'>Submit</button>
+                    </div>
+                    : <div className="buttons">
+                        <button className="btn btn-outline-warning" onClick={handleEdit}>Edit</button>
+                    </div>
                 }
             </form>
+            <div className="coupons">
+                <h1>My Coupons</h1>
+                {
+                    !isCouponLoading && coupon &&
+                    coupon.data.map((val, i) => {
+                        return <p key={i}><GiPriceTag/> Cashback IDR {val.discount_amount.toLocaleString('id-ID')}</p>
+                    })
+                }
+            </div>
         </section>
     )
     return content

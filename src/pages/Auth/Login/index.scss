@@ -1,6 +1,9 @@
 @import '../../../variables.scss';
 
 section.login {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     height: 100vh;
     width: auto;
     background-image: url("https://res.cloudinary.com/dgr6o89ym/image/upload/v1672109205/sources/wallpaperflare.com_wallpaper_wtqler.jpg");

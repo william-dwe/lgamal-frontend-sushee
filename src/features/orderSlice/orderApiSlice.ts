@@ -1,7 +1,7 @@
 import { IRes } from "../../entity";
 import { apiSlices } from "../../app/api/apiSlice";
 import { ICartLists, ICartPostReq } from "../../entity/Carts";
-import { IOrderReqBody, IPaymentOptionResBody } from "../../entity/Order";
+import { IOrder, IOrderReqBody, IPaymentOptionResBody } from "../../entity/Order";
 
 export const orderApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
@@ -21,11 +21,19 @@ export const orderApiSlice = apiSlices.injectEndpoints({
                 url: "/orders/payment",
                 method: 'GET',
             }),
-        })
+        }),
+        getOrders: builder.query<IRes<IOrder[]>, void>({
+            query: () => ({
+                url: "/orders",
+                method: 'GET',
+            }),
+        }),
     })
 })
 
 export const {
     usePostOrdersMutation,
     useGetPaymentOptionQuery,
+    useGetOrdersQuery,
+    useLazyGetPaymentOptionQuery,
 } = orderApiSlice

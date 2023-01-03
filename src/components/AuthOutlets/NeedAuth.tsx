@@ -23,10 +23,7 @@ const NeedAuth = () : JSX.Element => {
 
     useEffect(() => {
         if (isSuccess) {
-            const newAccessToken = response.data.access_token
-            const userDetail = jwtDecode(newAccessToken) as any
-            const username = userDetail.username
-            dispatch(setCredentials({...response, username}))
+            dispatch(setCredentials({...response}))
         }
     }, [response])
 

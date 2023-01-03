@@ -7,6 +7,7 @@ const cartSlice = createSlice({
   initialState: {
     cartToggle: false,
     selectedCart: [],
+    selectedCoupon: "",
   } as ICartState,
   reducers: {
     setCartToggle: (state, action) => {
@@ -23,7 +24,9 @@ const cartSlice = createSlice({
         return !action.payload.includes(item)
       })
     },
-    
+    selectCoupon: (state, action) => {
+      state.selectedCoupon = action.payload
+    }
   },
 })
 
@@ -32,9 +35,11 @@ export const {
     selectCart,
     removeCart,
     removeCarts,
+    selectCoupon,
 } = cartSlice.actions
 
 export default cartSlice.reducer
 
 export const selectCartToggle = (state: RootState): boolean => state.cart.cartToggle
 export const selectSelectedCart = (state: RootState): number[] => state.cart.selectedCart
+export const selectSelectedCoupon = (state: RootState): string => state.cart.selectedCoupon

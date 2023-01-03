@@ -3,7 +3,16 @@
 
 div.card {
     img.card-img {
-        padding: 3%;
+        margin-top: 2vh;
+        margin-bottom: 0;
+        transition: 0.5s;
+    }
+
+    &:hover {
+        img.card-img {
+            margin-top: 0;
+            margin-bottom: 2vh;         
+        }
     }
 
     div.card-footer {

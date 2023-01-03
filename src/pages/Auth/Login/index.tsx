@@ -22,13 +22,13 @@ export default function Login():JSX.Element {
         e.preventDefault()
         try {
             const userData = await login({identifier, password}).unwrap()
-            dispatch(setCredentials({...userData, identifier}))
+            dispatch(setCredentials({...userData}))
             setIdentifier('')
             setPassword('')
             toast.success('Login succeed')
             navigate(location.state?location.state.from.pathname:"/")   
-        } catch (err) {
-            toast.error("Login failed")
+        } catch (err: any) {
+            toast.error(err.data.data.message)
         }
     }
 

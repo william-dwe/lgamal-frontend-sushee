@@ -1,37 +1,71 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./index.scss"
-import { removeCarts, selectCartToggle, selectSelectedCart, setCartToggle } from '../../../features/cartSlice';
+import { removeCarts, selectCartToggle, selectCoupon, selectSelectedCart, selectSelectedCoupon, setCartToggle } from '../../../features/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 import CartCard from '../CartCard';
-import { useDeleteAllCartsMutation, useGetCartQuery } from '../../../features/cartSlice/cartApiSlice';
+import { useDeleteAllCartsMutation, useLazyGetCartQuery, useLazyGetUserCouponQuery } from '../../../features/cartSlice/cartApiSlice';
 import DropUp from '../../DropUp';
-import { useGetPaymentOptionQuery, usePostOrdersMutation } from '../../../features/orderSlice/orderApiSlice';
-import { IOrderReqBody } from '../../../entity/Order';
+import { useLazyGetPaymentOptionQuery, usePostOrdersMutation } from '../../../features/orderSlice/orderApiSlice';
+import { IOrderReqBody, IPaymentOptionResBody } from '../../../entity/Order';
+import DropDown from '../../DropDown';
+import { ICartLists, ICoupon } from '../../../entity/Carts';
 
 export default function CartOffCanvas(): JSX.Element {
     const dispatch = useDispatch()
     const cartToggle = useSelector(selectCartToggle)
     const selectedCart = useSelector(selectSelectedCart)
-    const {data: cart, isLoading: isCartLoading } = useGetCartQuery()
-    const {data: payment, isLoading: isPaymentLoading} = useGetPaymentOptionQuery()
-
-    const handleOpenCart = ((e: any) => {
-        dispatch(setCartToggle(!cartToggle))
-    })
+    const selectedCoupon = useSelector(selectSelectedCoupon)
 
     const [deleteAllCarts] = useDeleteAllCartsMutation()
+    const [postOrders] = usePostOrdersMutation()
+
+    const [getCart, getCartResult] = useLazyGetCartQuery()
+    const [cart, setCart] = useState<ICartLists>()
+    useEffect(()=> {
+        if(getCartResult && getCartResult.data) {
+            setCart(getCartResult.data.data)
+        }
+    }, [getCartResult])
+
+    const [getPaymentOption, getPaymentOptionResult] = useLazyGetPaymentOptionQuery()
+    const [paymentOption, setPaymentOption] = useState<IPaymentOptionResBody>()
+    useEffect(()=> {
+        if(getPaymentOptionResult && getPaymentOptionResult.data) {
+            setPaymentOption(getPaymentOptionResult.data.data)
+        }
+    }, [getPaymentOptionResult])
+
+    const [getCoupon, getCouponResult] = useLazyGetUserCouponQuery()
+    const [coupon, setCoupon] = useState<ICoupon[]>()
+    useEffect(()=> {
+        if(getCouponResult && getCouponResult.data) {
+            setCoupon(getCouponResult.data.data)
+        }
+    }, [getCouponResult])
+
+    useEffect(()=>{
+        if (cartToggle) {
+            getCart()
+            getPaymentOption()
+            getCoupon()
+        }
+    }, [cartToggle])
+
+    const handleOpenCart = (() => {
+        dispatch(setCartToggle(!cartToggle))
+    })
     const handleDelete = () => {
         deleteAllCarts()
     }
-
-
-    const [postOrders] = usePostOrdersMutation()
-
+    const handleCoupon = (e: any) => {
+        dispatch(selectCoupon(e.target.value))
+    }
     const handleOrder = (async (e: any) => {
         const reqBody = {
             cart_id_list: selectedCart,
             payment_option_id: Number(e.target.value),
+            coupon_code: selectedCoupon,
         } as IOrderReqBody
         postOrders(reqBody)
         dispatch(removeCarts(selectedCart))
@@ -45,8 +79,8 @@ export default function CartOffCanvas(): JSX.Element {
                     <h2>Ready to Order?</h2>
                     <hr/>
                     <div className="container">
-                        {!isCartLoading && cart
-                        ? cart.data.carts.map((val, i) => {
+                        {cart
+                        ? cart.carts.map((val, i) => {
                             return <CartCard
                                 id={val.id}
                                 menu={val.menu}
@@ -61,28 +95,42 @@ export default function CartOffCanvas(): JSX.Element {
                     }
                     </div>
                     {
-                        cart?.data.carts.length !== 0
+                        cart?.carts.length !== 0
                         ? <>
                             <hr/>
-                            <p className="total">Total Price: IDR {!isCartLoading && cart 
-                            ? (cart.data.carts.reduce((cum, x) => {
-                                if (!selectedCart.includes(x.id)) {
-                                    return cum+0
-                                }
-                                const item_price = x.promotion_price ? x.promotion_price : x.menu.price
-                                return cum+item_price*x.quantity
-                            }, 0)).toLocaleString('id-ID')
-                            : 0}
+                            <p className="total">Total Price: IDR 
+                            { 
+                                cart 
+                                ? (cart.carts.reduce((cum, x) => {
+                                    if (!selectedCart.includes(x.id)) {
+                                        return cum+0
+                                    }
+                                    const item_price = x.promotion_price ? x.promotion_price : x.menu.price
+                                    return cum+item_price*x.quantity
+                                }, 0)).toLocaleString('id-ID')
+                                : 0
+                            }
                             </p>
+                            <div className="coupon">
+                                {
+                                    coupon &&
+                                    <DropDown 
+                                        name="coupon" 
+                                        handle={handleCoupon} 
+                                        coupons={coupon}
+                                    ></DropDown>
+                                }
+                            </div>
                         </>
                         : <p className='note'>Add some item here :D!</p>
                     }
+                    
                     <div className="cart-footer">
                         <button className="delete-all btn btn-danger" onClick={handleDelete}>Delete All</button>
                         {
-                            !isPaymentLoading && payment &&
+                            paymentOption &&
                             <DropUp text="Order Now!" content={
-                                payment.data.payment_options.map((val, i) => {
+                                paymentOption.payment_options.map((val, i) => {
                                     return {
                                         label: val.payment_name,
                                         value: val.id,

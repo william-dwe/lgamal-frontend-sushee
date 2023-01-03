@@ -12,6 +12,7 @@ export interface IAuthReqRegister {
 
 export interface IToken {
     access_token: string;
+    role_name: string;
 }
 
 export interface IUserContext {

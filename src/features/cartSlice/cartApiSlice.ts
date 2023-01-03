@@ -1,6 +1,6 @@
 import { IRes } from "../../entity";
 import { apiSlices } from "../../app/api/apiSlice";
-import { ICartLists, ICartPostReq } from "../../entity/Carts";
+import { ICartLists, ICartPostReq, ICoupon } from "../../entity/Carts";
 
 export const cartApiSlice = apiSlices.injectEndpoints({
     endpoints: builder => ({
@@ -48,6 +48,14 @@ export const cartApiSlice = apiSlices.injectEndpoints({
             }),
             invalidatesTags: ['Cart']
         }),
+        getUserCoupon: builder.query<IRes<ICoupon[]>, void>({
+            query: () => {
+                return ({
+                    url: '/users/coupons'
+                })
+            },
+            providesTags: ['Cart']
+        }),
     })
 })
 
@@ -56,5 +64,8 @@ export const {
     usePostCartsMutation,
     usePostUpdateCartMutation,
     useDeleteCartsMutation,
-    useDeleteAllCartsMutation
+    useDeleteAllCartsMutation,
+    useGetUserCouponQuery,
+    useLazyGetCartQuery,
+    useLazyGetUserCouponQuery,
 } = cartApiSlice

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { selectCurrentToken, setCredentials } from '../../features/authSlice'
 import { useRefreshQuery } from '../../features/authSlice/authApiSlice'
-import jwtDecode from 'jwt-decode'
+import Loader from '../Loader'
 
 
 const ShouldNotAuth = () : JSX.Element => {
@@ -21,10 +21,7 @@ const ShouldNotAuth = () : JSX.Element => {
 
     useEffect(() => {
         if (isSuccess && !authToken) {
-            const newAccessToken = response.data.access_token
-            const userDetail = jwtDecode(newAccessToken) as any
-            const username = userDetail.username
-            dispatch(setCredentials({...response, username}))
+            dispatch(setCredentials({...response}))
         }
     }, [response])
     useEffect(()=>{
@@ -35,7 +32,7 @@ const ShouldNotAuth = () : JSX.Element => {
 
     const content = ( 
         isLoading && isError
-            ? <h1>Loading..</h1>
+            ? <Loader/>
             : <Outlet/>
     )
     return content

@@ -8,6 +8,7 @@ import './index.scss'
 import InputField from '../../../components/InputField';
 import Loader from '../../../components/Loader';
 import Button from '../../../components/Button';
+import { IRes } from '../../../entity';
 
 
 export default function Register():JSX.Element {
@@ -25,16 +26,15 @@ export default function Register():JSX.Element {
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         try {
-          const userData = await register({full_name, email, phone, username, password}).unwrap()
-          dispatch(setCredentials({...userData, username}))
+          await register({full_name, email, phone, username, password}).unwrap()
           setFullName('')
           setUsername('')
           setEmail('')
           setPassword('')
           toast.success('Register succeed')
-          navigate('/')
-        } catch (err) {
-            toast.error("Register failed")
+          navigate('/login')
+        } catch (err: any) {
+            toast.error(err.data.message)
         }
     }
 

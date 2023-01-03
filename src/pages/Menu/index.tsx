@@ -8,6 +8,7 @@ import { selectFilterQuery, setFilterQuery } from '../../features/menuSlice'
 import RadioButton from '../../components/RadioButton'
 import { apiSlices } from '../../app/api/apiSlice'
 import PromotionCard from '../../components/PromotionCard'
+import { selectCurrentRole } from '../../features/authSlice'
 
 const Menu = (): JSX.Element => {
     const hero1 = "https://res.cloudinary.com/dgr6o89ym/image/upload/c_scale,h_1080,w_1920/v1672109205/sources/wallpaperflare.com_wallpaper_wtqler.jpg"
@@ -19,6 +20,7 @@ const Menu = (): JSX.Element => {
     const filterQuery = useSelector(selectFilterQuery)
     const { data: menu, isLoading: isMenuLoading } = useGetMenusQuery(filterQuery)
     const { data: promotion, isError: isPromotionError, isLoading: isPromotionLoading } = useGetPromotionsQuery()
+    const role = useSelector(selectCurrentRole)
     
     const handleFilter = ((e: any) => {
         const newFilterQuery = {...filterQuery}
@@ -41,25 +43,25 @@ const Menu = (): JSX.Element => {
             <section className="hero">
                 <div className="carousel-inner">
                     <div className={`carousel-item ${slideState === 1 ? "active" : ""}`}>
-                    <img src={hero1} className="d-block w-100" alt="slide 1"/>
-                    <div className="carousel-caption d-none d-md-block">
-                        <h5>Fine sushi dining in one-click away</h5>
-                        <p>Experience your favorite japanese meals at its finest.</p>
+                        <img src={hero1} className="d-block w-100" alt="slide 1"/>
+                        <div className="carousel-caption d-none d-md-block">
+                            <h5>Fine sushi dining in one-click away</h5>
+                            <p>Experience your favorite japanese meals at its finest.</p>
+                        </div>
                     </div>
-                    </div>
-                    <div className={`carousel-item ${slideState === 2 ? "active" : ""}`}>
-                    <img src={hero2} className="d-block w-100" alt="slide 2"/>
-                    <div className="carousel-caption d-none d-md-block">
-                        <h5>Fine sushi dining in one-click away</h5>
-                        <p>Experience your favorite japanese meals at its finest.</p>
-                    </div>
+                        <div className={`carousel-item ${slideState === 2 ? "active" : ""}`}>
+                        <img src={hero2} className="d-block w-100" alt="slide 2"/>
+                        <div className="carousel-caption d-none d-md-block">
+                            <h5>Fine sushi dining in one-click away</h5>
+                            <p>Experience your favorite japanese meals at its finest.</p>
+                        </div>
                     </div>
                     <div className={`carousel-item ${slideState === 3 ? "active" : ""}`}>
-                    <img src={hero3} className="d-block w-100" alt="slide 3"/>
-                    <div className="carousel-caption d-none d-md-block">
-                        <h5>Fine sushi dining in one-click away</h5>
-                        <p>Experience your favorite japanese meals at its finest.</p>
-                    </div>
+                        <img src={hero3} className="d-block w-100" alt="slide 3"/>
+                        <div className="carousel-caption d-none d-md-block">
+                            <h5>Fine sushi dining in one-click away</h5>
+                            <p>Experience your favorite japanese meals at its finest.</p>
+                        </div>
                     </div>
                 </div>
             </section>
