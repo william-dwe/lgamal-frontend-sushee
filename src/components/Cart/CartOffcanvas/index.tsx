@@ -4,12 +4,15 @@ import { removeCarts, selectCartToggle, selectCoupon, selectSelectedCart, select
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 import CartCard from '../CartCard';
-import { useDeleteAllCartsMutation, useLazyGetCartQuery, useLazyGetUserCouponQuery } from '../../../features/cartSlice/cartApiSlice';
+import { useDeleteAllCartsMutation, useLazyGetCartQuery } from '../../../features/cartSlice/cartApiSlice';
 import DropUp from '../../DropUp';
 import { useLazyGetPaymentOptionQuery, usePostOrdersMutation } from '../../../features/orderSlice/orderApiSlice';
 import { IOrderReqBody, IPaymentOptionResBody } from '../../../entity/Order';
 import DropDown from '../../DropDown';
-import { ICartLists, ICoupon } from '../../../entity/Carts';
+import { ICartLists } from '../../../entity/Carts';
+import { toast } from 'react-toastify';
+import { useLazyGetUserCouponQuery } from '../../../features/couponSlice/couponApiSlice';
+import { IUserCoupon } from '../../../entity/Coupon';
 
 export default function CartOffCanvas(): JSX.Element {
     const dispatch = useDispatch()
@@ -37,10 +40,10 @@ export default function CartOffCanvas(): JSX.Element {
     }, [getPaymentOptionResult])
 
     const [getCoupon, getCouponResult] = useLazyGetUserCouponQuery()
-    const [coupon, setCoupon] = useState<ICoupon[]>()
+    const [coupon, setCoupon] = useState<IUserCoupon[]>()
     useEffect(()=> {
         if(getCouponResult && getCouponResult.data) {
-            setCoupon(getCouponResult.data.data)
+            setCoupon(getCouponResult.data.data.user_coupons)
         }
     }, [getCouponResult])
 
@@ -62,13 +65,18 @@ export default function CartOffCanvas(): JSX.Element {
         dispatch(selectCoupon(e.target.value))
     }
     const handleOrder = (async (e: any) => {
-        const reqBody = {
-            cart_id_list: selectedCart,
-            payment_option_id: Number(e.target.value),
-            coupon_code: selectedCoupon,
-        } as IOrderReqBody
-        postOrders(reqBody)
-        dispatch(removeCarts(selectedCart))
+        try {
+            const reqBody = {
+                cart_id_list: selectedCart,
+                payment_option_id: Number(e.target.value),
+                coupon_code: selectedCoupon,
+            } as IOrderReqBody
+            postOrders(reqBody)
+            dispatch(removeCarts(selectedCart))
+            toast.success('Order succeed, please proceed with the payment')
+        } catch (err: any) {
+            toast.error(err.data.data.message)
+        }
     })
 
     return (

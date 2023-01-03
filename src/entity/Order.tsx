@@ -13,6 +13,25 @@ export interface IOrder {
     gross_amount: number,
     discount_amount: number,
     net_amount: number,
+    status: string,
+}
+
+export interface IOrderHistory {
+    orders: IOrder[],
+}
+
+export interface IOrderTrackingUpdateReqBody {
+    order_id: number,
+    status: string,
+}
+
+export interface IOrderQuery {
+    search: string;
+	sort: string;
+	sortBy: string;
+	filterByStatus: string;
+	limit: number;
+	page: number;
 }
 
 export interface IOrderedMenu {

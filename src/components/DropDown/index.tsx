@@ -1,11 +1,11 @@
 import React from 'react'
-import { ICoupon } from '../../entity/Carts'
 import './index.scss' //todo: styling
+import { IUserCoupon } from '../../entity/Coupon'
 
 type Props = {
     name: string,
     handle: ((e:any) => void)
-    coupons: ICoupon[]
+    coupons: IUserCoupon[]
 }
 
 function DropDown(props: Props): JSX.Element {

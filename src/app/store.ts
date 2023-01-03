@@ -4,6 +4,7 @@ import authReducer from '../features/authSlice'
 import userReducer from '../features/userSlice'
 import menuReducer from '../features/menuSlice'
 import cartReducer from '../features/cartSlice'
+import orderReducer from '../features/orderSlice'
 import logger from 'redux-logger';
 
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     user: userReducer,
     menu: menuReducer,
     cart: cartReducer,
+    order: orderReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

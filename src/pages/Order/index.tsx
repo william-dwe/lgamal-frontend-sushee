@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useGetOrdersQuery } from '../../features/orderSlice/orderApiSlice'
 import moment from 'moment'
 import "./index.scss"
@@ -26,8 +26,8 @@ const Order = (): JSX.Element => {
             </thead>
             <tbody>
             {
-                !isOrderLoading && order && 
-                order.data.map((val, i) => {
+                !isOrderLoading && order?.data.orders && 
+                order.data.orders.map((val, i) => {
                     return <tr key={i}>
                         <td>{moment(val.order_date).format('MMMM Do YYYY, h:mm:ss a')}</td>
                         <td>{val.coupon_id}</td>

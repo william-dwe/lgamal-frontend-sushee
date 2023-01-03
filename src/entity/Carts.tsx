@@ -39,10 +39,3 @@ export interface ICartState {
     selectedCart: number[],
     selectedCoupon: string,
 }
-
-export interface ICoupon {
-    user_id: number,
-    coupon_id: number,
-    coupon_code: number,
-    discount_amount: number,
-}

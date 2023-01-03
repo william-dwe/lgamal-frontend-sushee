@@ -24,7 +24,12 @@ export default function Navigation(): JSX.Element {
                         <Cart/>
                         </>
                         : role === "admin" 
-                            ? <span><NavLink end to='admin'>Admin</NavLink></span>
+                            ? <>
+                                <span><NavLink end to='admin/coupon'>Coupon</NavLink></span>
+                                <span><NavLink end to='admin/menu'>Menu</NavLink></span>
+                                <span><NavLink end to='admin/order'>Order</NavLink></span>
+                                
+                            </>
                             : <>
                                 <span><NavLink end to='login'>Login</NavLink></span>
                                 <span><NavLink end to='register'>Register</NavLink></span>

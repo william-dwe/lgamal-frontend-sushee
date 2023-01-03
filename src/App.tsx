@@ -16,7 +16,9 @@ import CartOffCanvas from './components/Cart/CartOffcanvas';
 import NeedAuth from './components/AuthOutlets/NeedAuth';
 import ShouldAuthAdmin from './components/AuthOutlets/ShouldAuthAdmin';
 import Order from './pages/Order';
-import Loader from './components/Loader';
+import AdminCoupon from './pages/AdminCoupon';
+import AdminMenu from './pages/AdminMenu';
+import AdminOrder from './pages/AdminOrder';
 
 
 function App(): JSX.Element {
@@ -38,8 +40,9 @@ function App(): JSX.Element {
                 <Route path='/orders' element={<Order/>}/>
               </Route>
               <Route element={<ShouldAuthAdmin/>}>
-                <Route path='/admin' element={<h1>admin page</h1>}/>
-                <Route path='/loader' element={<Loader/>}/>
+                <Route path='/admin/coupon' element={<AdminCoupon/>}/>
+                <Route path='/admin/menu' element={<AdminMenu/>}/>
+                <Route path='/admin/order' element={<AdminOrder/>}/>
               </Route>
             </Route>
           </Route>

@@ -6,9 +6,9 @@ import {IUserContext} from '../../../entity/UserAuth'
 import { useEditProfileMutation, useProfileQuery } from '../../../features/userSlice/userApiSlice'
 import Loader from '../../../components/Loader'
 import "./index.scss"
-import { useGetUserCouponQuery } from '../../../features/cartSlice/cartApiSlice'
 import {GiPriceTag} from 'react-icons/gi'
 import { toast } from 'react-toastify'
+import { useGetUserCouponQuery } from '../../../features/couponSlice/couponApiSlice'
 
 const Profile = (): JSX.Element => {
     const [currentProfileDetail, setCurrentProfileDetail] = React.useState<IUserContext>()
@@ -161,8 +161,8 @@ const Profile = (): JSX.Element => {
             <div className="coupons">
                 <h1>My Coupons</h1>
                 {
-                    !isCouponLoading && coupon &&
-                    coupon.data.map((val, i) => {
+                    !isCouponLoading && coupon?.data.user_coupons &&
+                    coupon.data.user_coupons.map((val, i) => {
                         return <p key={i}><GiPriceTag/> Cashback IDR {val.discount_amount.toLocaleString('id-ID')}</p>
                     })
                 }

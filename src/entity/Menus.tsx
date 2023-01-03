@@ -1,3 +1,5 @@
+import { IReview } from "./Order";
+
 export interface IMenuCustomization {
 	title: string;
 	type: string;
@@ -21,6 +23,23 @@ export interface IMenuLists {
     max_page: number;
 }
 
+export interface IMenuPostReq {
+	menu_name?: string;
+    price?: number;
+    menu_photo?: string;
+    category_id?: number;
+    customization?: any;
+}
+
+export interface IMenuPostUpdateReq {
+	menu_id: number;
+	menu_name?: string;
+    price?: number;
+    menu_photo?: string;
+    category_id?: number;
+    customization?: any;
+}
+
 export interface IMenuQuery {
 	search: string;
 	sort: string;
@@ -29,6 +48,18 @@ export interface IMenuQuery {
 	limit: number;
 	page: number;
 
+}
+
+export interface IMenuReview {
+    id: number;
+	menu_name: string;
+	avg_rating: number;
+	number_of_favorites: number;
+	price: number;
+	menu_photo: string;
+	category_id: number;
+	customization: any[];
+	reviews: IReview[];
 }
 
 export interface IPromotion {
