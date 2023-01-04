@@ -88,7 +88,7 @@ export default function AdminMenu():JSX.Element {
                 : <Loader/>
             }
             <AdminForm
-                cols={property.cols}
+                cols={property.cols.filter((val) => !["avg_rating", "number_of_favorites"].includes(val.name))}
                 handleSubmit={handleSubmit}
             />
         </div>

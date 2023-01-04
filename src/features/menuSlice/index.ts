@@ -10,7 +10,7 @@ const menuFilterSlice = createSlice({
         sort: "asc",
         sortBy: "id",
         filterByCategory: "meals,drinks,appetizers",
-        limit: 10,
+        limit: 8,
         page: 1,
       }
   },

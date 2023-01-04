@@ -75,7 +75,7 @@ export default function AdminOrder():JSX.Element {
                 : <Loader/>
             }
             <AdminForm
-                cols={property.cols}
+                cols={property.cols.filter((val) => ["id", "status"].includes(val.name))}
                 handleSubmit={handleSubmit}
             />
         </div>
