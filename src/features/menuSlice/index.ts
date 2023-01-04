@@ -6,11 +6,11 @@ const menuFilterSlice = createSlice({
   name: 'menuFilter',
   initialState: {
       filterQuery: {
-        search: "",
+        s: "",
         sort: "asc",
         sortBy: "id",
         filterByCategory: "meals,drinks,appetizers",
-        limit: 0,
+        limit: 10,
         page: 1,
       }
   },

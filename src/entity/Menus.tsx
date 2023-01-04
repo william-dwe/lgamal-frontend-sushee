@@ -41,7 +41,7 @@ export interface IMenuPostUpdateReq {
 }
 
 export interface IMenuQuery {
-	search: string;
+	s: string;
 	sort: string;
 	sortBy: string;
 	filterByCategory: string;

@@ -27,8 +27,23 @@ const Menu = (): JSX.Element => {
 
     const handleFilterSearch = ((e: any) => {
         const newFilterQuery = {...filterQuery}
-        newFilterQuery.search = e.target.value
-        console.log("DEBUG", e.target.value)
+        newFilterQuery.s = e.target.value
+        dispatch(setFilterQuery(newFilterQuery))
+    })
+
+    const handleFilterSort = ((e: any) => {
+        const newFilterQuery = {...filterQuery}
+        newFilterQuery.sort = e.target.value
+        dispatch(setFilterQuery(newFilterQuery))
+    })
+    const handleFilterSortBy = ((e: any) => {
+        const newFilterQuery = {...filterQuery}
+        newFilterQuery.sortBy = e.target.value
+        dispatch(setFilterQuery(newFilterQuery))
+    })
+    const handleFilterPage = ((e: any) => {
+        const newFilterQuery = {...filterQuery}
+        newFilterQuery.page = e.target.value
         dispatch(setFilterQuery(newFilterQuery))
     })
 
@@ -131,7 +146,17 @@ const Menu = (): JSX.Element => {
                                 value='drinks'
                                 onChange={handleFilterCategory}
                             />
-                            <input type="text" onChange={handleFilterSearch} />
+                            <select name="sortBy" id="sort" onChange={handleFilterSortBy}>
+                                <option value="menu_name">Menu Name</option>
+                                <option value="avg_rating">Average Rating</option>
+                                <option value="price">Price</option>
+                            </select>
+                            <select name="sort" id="sort" onChange={handleFilterSort}>
+                                <option value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                            <input className='page' type="text" placeholder="page" onChange={handleFilterPage} />
+                            <input className='search' type="text" placeholder="search" onChange={handleFilterSearch} />
                         </div>
                     </div>
                     <div className="row menu-container">
