@@ -41,7 +41,7 @@ function CustomizationModal (props: Props): JSX.Element {
   return (
     <form className="customization-modal" onSubmit={props.handleSubmit}>
       {
-        props.customization.map((val, i) => {
+        props.customization?.map((val, i) => {
           return <div className="customization-modal-item" key={i}>
             <hr/>
             <h5>{val.title}</h5>
